@@ -33,7 +33,7 @@ class Tv extends React.Component {
   state = {
     // isLoading: true,
     movies: [],
-    type:'popular'
+    type:'airing_today'
   }
 
   getTvs = async () => {
@@ -101,6 +101,7 @@ class Tv extends React.Component {
             key={index}
             original_name={movie.original_name} 
             first_air_date={movie.first_air_date} 
+            popularity={movie.popularity} 
             overview={movie.overview} 
             poster_path={movie.poster_path}
             genre_ids={movie.genre_ids}
@@ -114,9 +115,10 @@ class Tv extends React.Component {
 
     
 export default withStyles(styles)(Tv);
+//https://api.themoviedb.org/3/tv/airing_today?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US
 
-//https://api.themoviedb.org/3/tv/latest?api_key=<<api_key>>&language=en-US
+//https://api.themoviedb.org/3/tv/latest?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US
 
-//https://api.themoviedb.org/3/tv/popular?api_key=<<api_key>>&language=en-US&page=1
+//https://api.themoviedb.org/3/tv/popular?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
 
-//https://api.themoviedb.org/3/tv/top_rated?api_key=<<api_key>>&language=en-US&page=1
+//https://api.themoviedb.org/3/tv/top_rated?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1

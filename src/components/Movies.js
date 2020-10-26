@@ -36,7 +36,7 @@ class Movies extends React.Component {
   state = {
     isLoading: true,
     movies: [],
-    type:'popular',
+    type:'now_playing',
     page:1
   }
 
@@ -119,6 +119,7 @@ class Movies extends React.Component {
             key={index}
             title={movie.title} 
             release_date={movie.release_date} 
+            popularity={movie.popularity} 
             overview={movie.overview} 
             poster_path={movie.poster_path}
           />

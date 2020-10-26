@@ -1,55 +1,73 @@
 import axios from 'axios';
 import React from 'react';
-
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 import noimage from '../images/noimage.png'
 
-class TvList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    marginBottom:'20px'
+  },
+  cover: {
+    width: '35%',
+    height: '38vw',
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+    width:'65%',
+  },
+  content: {
+    flex: '1 auto',
+  },
 
-  state = {
-      genre: []
-    }
+}));
 
-  getGenre = async () => {
-    const {data:{genres}} = await axios.get("https://api.themoviedb.org/3/genre/tv/list?api_key=45ffcc6c9ffc640faa6714543e2fc6a3")
-    this.setState({genre:genres})
-}
-  componentDidMount() {
-    this.getGenre();
-  }
+const TvList = ({original_name, poster_path, popularity, first_air_date, overview}) => {
+  const classes = useStyles();
+  const theme = useTheme();
 
-
-render() {
-  let genre_data = [];
-  const {genre} = this.state;
-  const {original_name, poster_path, genre_ids, first_air_date, overview} = this.props;
-  genre.map(el =>genre_data[el.id] = el.name);
-
-  
   return (
-    <>
-    <ul className="movieList">
-      {/* <li>{key}</li> */}
-      <li>
-        {poster_path ?
-        <img alt={original_name} src={`https://image.tmdb.org/t/p/w500${poster_path}`} className="movieImg" />
-        : 
-        <img src={noimage} style={{maxWidth:'100%', borderRadius:'13px'}}/>
-        } 
-      </li>
-      <li className="title">{original_name}</li>
-      <li className="genre">
-        {genre_ids.map(id => (
-        <span>{genre_data[id]}</span>
-      ))}</li>
-      <li className="date">First_air_date : {first_air_date}</li>
-      <li>{overview}</li>
-    </ul>
-    </>
+    <Card className={classes.root}>
+    {poster_path ?
+    <CardMedia
+      className={classes.cover}
+      image={`https://image.tmdb.org/t/p/w500${poster_path}`}
+      title={original_name}
+    />
+    :
+    <CardMedia
+      className={classes.cover}
+      image={noimage}
+      title="no image"
+    />
+    }
+    <div className={classes.details}>
+      <CardContent className={classes.content}>
+        <Typography component="h5" variant="h5">
+          {original_name}
+        </Typography>
+        <Typography variant="subtitle2" color="textSecondary">
+          <span>First_air_date : {first_air_date}</span>
+          <span> / Popularity : {popularity}</span>
+        </Typography>
+        {overview ?
+        <Typography variant="body2" component="p" style={{marginTop:'20px'}}>
+          {overview}
+        </Typography>
+        :
+        <Typography variant="body2" component="p" style={{marginTop:'20px'}}>
+          No overview provided
+        </Typography>
+      }   
+      </CardContent>
+    </div>
+    </Card>
   )
-}
 }
 
 export default TvList;

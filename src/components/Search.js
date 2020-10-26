@@ -143,6 +143,7 @@ class Search extends React.Component {
           original_name={movie.original_name}
           release_date={movie.release_date} 
           first_air_date={movie.first_air_date}
+          popularity={movie.popularity}
           overview={movie.overview} 
           poster_path={movie.poster_path}
           genre_ids={movie.genre_ids}

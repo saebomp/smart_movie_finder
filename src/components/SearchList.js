@@ -1,81 +1,78 @@
 import axios from 'axios';
 import React from 'react';
-
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
 import noimage from '../images/noimage.png'
 
-class SearchList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    marginBottom:'20px'
+  },
+  cover: {
+    width: '35%',
+    height: '38vw',
+  },
+  details: {
+    display: 'flex',
+    flexDirection: 'column',
+    width:'65%',
+  },
+  content: {
+    flex: '1 auto',
+  },
+}));
 
-  state = {
-      tvGenre: [],
-      movieGenre:[]
-    }
+const SearchList = ({title, original_name, poster_path, popularity, release_date, first_air_date, overview}) => {
 
-  // getGenre = async () => {
-  //   const {data:{genres}} = await axios.get(`https://api.themoviedb.org/3/genre/${this.state.type}/list?api_key=45ffcc6c9ffc640faa6714543e2fc6a3`)
-  //   this.setState({genre:genres})
-  // }
+  const classes = useStyles();
+  const theme = useTheme();
 
-  // componentDidMount() {
-  //   this.getGenre();
-  // }
-
-  async componentDidMount() {
-    try {
-      const [firstResponse, secondResponse] = await Promise.all([
-        axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=45ffcc6c9ffc640faa6714543e2fc6a3`),
-        axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=45ffcc6c9ffc640faa6714543e2fc6a3`)
-      ]);
-      this.setState({tvGenre:firstResponse.data.genres, movieGenre:secondResponse.data.genres})
-    }
-    catch (err) {
-      console.log('error', err)
-    }
-  }
-
-
-
-
-render() {
-  let genre_data = [];
-  const {tvGenre, movieGenre} = this.state;
-  const {title, original_name, poster_path, release_date, first_air_date, overview} = this.props;
-  tvGenre.map(el =>genre_data[el.id] = el.name);
-  movieGenre.map(el =>genre_data[el.id] = el.name);
-  console.log(genre_data);
-  
   return (
-    <ul className="movieList">
-      {/* <li>{key}</li> */}
-      <li>
-        {poster_path ?
-        <img alt={title} src={`https://image.tmdb.org/t/p/w500${poster_path}`} className="movieImg" />
-        : 
-        <img src={noimage} style={{maxWidth:'100%', borderRadius:'13px'}}/>
-        } 
-      </li>
-      {title ?
-      <li className="title">{title}</li>
+    <Card className={classes.root}>
+      {poster_path ?
+      <CardMedia
+        className={classes.cover}
+        image={`https://image.tmdb.org/t/p/w500${poster_path}`}
+        title={title}
+      />
       :
-      <li className="title">{original_name}</li>
-      } 
-      <li className="genre">
-        {this.props && this.props.genre_ids && this.props.genre_ids.map(id => (
-        <span>{genre_data[id]}</span>
-      ))}</li>
-      {release_date ?
-      <li className="date">Release date : {release_date}</li>
-      :
-      <li className="date">First_air_date : {first_air_date}</li>
-      } 
-      <li>{overview}</li>
-    </ul>
+      <CardMedia
+        className={classes.cover}
+        image={noimage}
+        title="no image"
+      />
+      }
+      <div className={classes.details}>
+        <CardContent className={classes.content}>
+        {title ?
+          <Typography component="h5" variant="h5">
+            {title}
+          </Typography>
+          :
+          <Typography component="h5" variant="h5">
+            {original_name}
+          </Typography>
+          }
+           
+          <Typography variant="subtitle2" color="textSecondary">
+          {release_date ?
+            <span>Release date : {release_date}</span>
+            :
+            <span>First_air_date : {first_air_date}</span>
+          }
+            <span> / Popularity : {popularity}</span>
+          </Typography>
+          <Typography variant="body2" component="p" style={{marginTop:'20px'}}>
+            {overview}
+          </Typography>
+        </CardContent>
+      </div>
+    </Card>
   )
-
-  
-}
 }
 
 export default SearchList;
