@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from "axios";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,6 +9,7 @@ import SkipNextRoundedIcon from '@material-ui/icons/SkipNextRounded';
 import SkipPreviousRoundedIcon from '@material-ui/icons/SkipPreviousRounded';
 
 import MovieList from './MovieList'
+import {getMovies} from '../services/api'
 
 //style
 import './../App.css';
@@ -34,45 +34,53 @@ const styles = (theme) => ({
 });
 class Movies extends React.Component {
   state = {
-    isLoading: true,
+    type : 'now_playing',
+    isLoading: false,
     movies: [],
-    type:'now_playing',
-    page:1
+    page:1,
+    genre :'movie'
   }
 
-  getMovies = async () => {
-    const API = "45ffcc6c9ffc640faa6714543e2fc6a3";
-    const {data:{results}} = await axios.get(`https://api.themoviedb.org/3/movie/${this.state.type}?api_key=${API}&page=${this.state.page}`)
-    
-    //데이터를 불러오기도전에 함수가 실행되는걸 막기위해 axios 씀..?
-    // instead of  console.log(movies.data.results) 
-    // cost movies = await ~~   use {data:{results}}
-    // console.log(results);
 
-    this.setState({movies:results, isLoading: false}) 
+  getType = e => {
+    const {type,genre} = this.state
+    e.preventDefault()
+    this.setState({type:e.target.value})
+
+    this.setState({
+      isLoading:true
+    })
+
+    getMovies(type, genre).then(
+      movies => {
+        this.setState({
+          type:type,
+          movies,
+          isLoading:false,
+          genre:'movie'
+        })
+      },
+      error => {
+        alert('Error', `Something went Wrong ${error}`)
+      } 
+    )
   }
 
-  componentDidMount() {
-    this.getMovies();
+
+  updateType = e => {
+    this.setState({type:e.target.value})
+    console.log('type', this.state)
   }
-  
+
+  // componentDidMount() {
+  //   this.getType();
+  // }
+
 
   render() {
     const { classes } = this.props;
-    const {isLoading, movies} = this.state;
+    const {movies} = this.state;
 
-
-    const updateType = e => {
-      e.preventDefault();
-      this.setState({type:e.target.value})
-      // console.log('type', this.state)
-    }
-    const getType = e => {
-      e.preventDefault();
-      this.setState({type:e.target.value})
-      this.getMovies();
-      // this.setState({result:[]})
-    }
     const add = () => {
       this.setState({page:this.state.page+1})
       this.getMovies();
@@ -89,11 +97,11 @@ class Movies extends React.Component {
         <div>
           <form 
             className="inputWrapper" 
-            onSubmit = {getType}
+            onSubmit = {this.getType}
             >
             <Select
               className={classes.selectControl}
-              onChange={updateType}
+              onChange={this.updateType}
               defaultValue="now_playing"
             > 
               <MenuItem value="now_playing">Now-playing</MenuItem>
