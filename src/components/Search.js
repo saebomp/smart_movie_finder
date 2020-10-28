@@ -9,6 +9,7 @@ import axios from "axios";
 
 import SearchList from './SearchList'
 import './../App.css';
+import {searchQuery} from '../services/api'
 
 const styles = (theme) => ({
   root: {
@@ -53,20 +54,31 @@ class Search extends React.Component {
   state = {
     isLoading: true,
     result: [],
-    searchTitle:'',
-    type:''
+    query:'',
+    type:'movie'
   }
 
-  searchMovies = async () => {
-    const API = "45ffcc6c9ffc640faa6714543e2fc6a3";
-    const {data:{results}} = await axios.get(`https://api.themoviedb.org/3/search/${this.state.type}?api_key=${API}&language=en-US&page=1&include_adult=false&query=${this.state.searchTitle}`)
-    // console.log(results);
- 
-    this.setState({result:results, isLoading: false}) 
-  }
+  fetchMulti = e => {
+    const {type, query} = this.state
+    // this.setState({
+    //   isLoading:false
+    // })
 
-  componentDidMount() {
-    this.searchMovies();
+    searchQuery(type, query).then(
+      result => {
+        this.setState({
+          isLoading:false,
+          result,
+          query:query,
+          type:type
+        })
+      },
+      error => {
+        alert('Error', `Something went Wrong ${error}`)
+        console.log('error', error)
+      } 
+    )
+
   }
 
   render() {
@@ -74,21 +86,19 @@ class Search extends React.Component {
     const {isLoading, result} = this.state;
 
     const updateSearch = e => {
-      this.setState({searchTitle:e.target.value})
+      this.setState({query:e.target.value})
       // console.log('plzzzzz', this.state)
     }
     
     const updateType = e => {
       e.preventDefault();
       this.setState({type:e.target.value})
-      // console.log('type', this.state)
     }
 
     const getSearch = e => {
       e.preventDefault();
-      this.setState({searchTitle:e.target.value, type:e.target.value})
-      this.searchMovies();
-      // this.setState({result:[]})
+      this.setState({query:e.target.value, type:e.target.value})
+      this.fetchMulti();
     }
 
 
@@ -108,18 +118,17 @@ class Search extends React.Component {
               placeholder="Search field" 
               type="text" 
               variant="outlined" 
-              value={this.state.searchTitle} 
+              value={this.state.query} 
               onChange={updateSearch}
             />
             <Select
               className={classes.selectControl}
               onChange={updateType}
-              defaultValue="Type"
+              defaultValue="movie"
             >
-              <MenuItem value="Type">Type</MenuItem>
+              <MenuItem value="movie">Movie</MenuItem>
+              <MenuItem value="multi">Multi</MenuItem>
               <MenuItem value="tv">TV</MenuItem>
-              <MenuItem value="movie">Movies</MenuItem>
-              <MenuItem value="multi">Both</MenuItem>
             </Select>
             <Button 
               variant="contained"
@@ -161,7 +170,7 @@ export default withStyles(styles)(Search);
 
 
 //movie search
-//https://api.themoviedb.org/3/search/movie?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1&include_adult=false&query=${this.state.searchTitle}
+//https://api.themoviedb.org/3/search/movie?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1&include_adult=false&query=${this.state.query}
 
 //tv search
 //https://api.themoviedb.org/3/search/tv?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1&include_adult=false&query=war

@@ -35,8 +35,8 @@ const styles = (theme) => ({
 class Movies extends React.Component {
   
   state = {
-    type : 'now_playing',
     isLoading: false,
+    type : 'now_playing',
     movies: [],
     page:1
   }
@@ -52,9 +52,9 @@ class Movies extends React.Component {
     getMovies(type).then(
       movies => {
         this.setState({
+          isLoading:false,
           type:type,
-          movies,
-          isLoading:false
+          movies
         })
       },
       error => {
