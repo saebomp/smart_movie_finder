@@ -3,12 +3,12 @@ import axios from 'axios';
 import {APP_KEY, BASE_URL} from '../config/api_config';
 
 
-export const getMovies = async (type, genre) => {
+export const getMovies = async (type) => {
 
   // const {data:{results}} = await axios.get(`https://api.themoviedb.org/3/movie/${this.state.type}?api_key=${API}&page=${this.state.page}`)
 
   // this.setState({movies:results, isLoading: false}) 
-  const url = `${BASE_URL}/${genre}/${type}`
+  const url = `${BASE_URL}/movie/${type}`
 
   try {
     const response = await axios.get(url, {

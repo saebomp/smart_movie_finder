@@ -33,31 +33,28 @@ const styles = (theme) => ({
   }
 });
 class Movies extends React.Component {
+  
   state = {
     type : 'now_playing',
     isLoading: false,
     movies: [],
-    page:1,
-    genre :'movie'
+    page:1
   }
 
+  fetchMovies = e => {
 
-  getType = e => {
-    const {type,genre} = this.state
-    e.preventDefault()
-    this.setState({type:e.target.value})
+    const {type} = this.state
 
     this.setState({
       isLoading:true
     })
 
-    getMovies(type, genre).then(
+    getMovies(type).then(
       movies => {
         this.setState({
           type:type,
           movies,
-          isLoading:false,
-          genre:'movie'
+          isLoading:false
         })
       },
       error => {
@@ -66,21 +63,27 @@ class Movies extends React.Component {
     )
   }
 
-
-  updateType = e => {
-    this.setState({type:e.target.value})
-    console.log('type', this.state)
+  componentDidMount() {
+    this.fetchMovies();
   }
+  
 
-  // componentDidMount() {
-  //   this.getType();
-  // }
-
+  
 
   render() {
     const { classes } = this.props;
-    const {movies} = this.state;
+    const { movies } = this.state;
 
+    const updateType = e => {
+      e.preventDefault();
+      this.setState({type:e.target.value})
+    }
+  
+    const getType = e => {
+      e.preventDefault();
+      this.setState({type:e.target.value})
+      this.fetchMovies();
+    }
     const add = () => {
       this.setState({page:this.state.page+1})
       this.getMovies();
@@ -97,11 +100,11 @@ class Movies extends React.Component {
         <div>
           <form 
             className="inputWrapper" 
-            onSubmit = {this.getType}
+            onSubmit={getType}
             >
             <Select
               className={classes.selectControl}
-              onChange={this.updateType}
+              onChange={updateType}
               defaultValue="now_playing"
             > 
               <MenuItem value="now_playing">Now-playing</MenuItem>
