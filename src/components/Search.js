@@ -60,9 +60,6 @@ class Search extends React.Component {
 
   fetchMulti = e => {
     const {type, query} = this.state
-    // this.setState({
-    //   isLoading:false
-    // })
 
     searchQuery(type, query).then(
       result => {
@@ -87,7 +84,6 @@ class Search extends React.Component {
 
     const updateSearch = e => {
       this.setState({query:e.target.value})
-      // console.log('plzzzzz', this.state)
     }
     
     const updateType = e => {
@@ -142,22 +138,25 @@ class Search extends React.Component {
           </form>
         </div>
       </div>
-      {isLoading ? <div className="isLoading">Search for a movie</div> :
+      {/* Loading */}
+      {isLoading ? <div className="isLoading">Please enter a search</div> :
       <div className="movieWrapper">
-      
-      {result.map( (movie, index) => (
-        <SearchList
-          key={index}
-          title={movie.title} 
-          original_name={movie.original_name}
-          release_date={movie.release_date} 
-          first_air_date={movie.first_air_date}
-          popularity={movie.popularity}
-          overview={movie.overview} 
-          poster_path={movie.poster_path}
-          genre_ids={movie.genre_ids}
-        />
-      ))}
+        {/* Prompt when it has no result */}
+        {result.length === 0 ? (<div className="isLoading">Sorry, there were no results</div>)
+        :
+        result.map( (movie, index) => (
+          <SearchList
+            key={index}
+            title={movie.title} 
+            original_name={movie.original_name}
+            release_date={movie.release_date} 
+            first_air_date={movie.first_air_date}
+            popularity={movie.popularity}
+            overview={movie.overview} 
+            poster_path={movie.poster_path}
+          />
+        ))
+        }
       </div>
     }
     </div>
@@ -169,12 +168,5 @@ export default withStyles(styles)(Search);
 
 
 
-//movie search
-//https://api.themoviedb.org/3/search/movie?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1&include_adult=false&query=${this.state.query}
-
-//tv search
-//https://api.themoviedb.org/3/search/tv?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1&include_adult=false&query=war
-
-
-//multi
-//https://api.themoviedb.org/3/search/multi?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1&include_adult=false&query=war
+//reference
+//https://stackoverflow.com/questions/59144130/create-a-error-message-for-no-results-in-react-js
