@@ -7,7 +7,6 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-// import Home from './components/Home';
 import Movies from './components/Movies';
 import Tv from './components/Tv';
 import Search from './components/Search';
@@ -88,17 +87,12 @@ export default function App() {
           classes={{indicator: classes.indicator}}
           style={{backgroundColor:'#FFF'}}
         >
-          {/* <LinkTab label="Home" href="/Home" {...a11yProps(0)} style={{color:'#00293b', fontWeight:'bold'}} /> */}
           <LinkTab label="Movie" href="/Movie" {...a11yProps(0)} style={{color:'#00293b', fontWeight:'bold'}} />
           <LinkTab label="Search" href="/Search" {...a11yProps(1)} style={{color:'#00293b', fontWeight:'bold'}} />
           <LinkTab label="TV" href="/Tv" {...a11yProps(2)}  style={{color:'#00293b', fontWeight:'bold'}} />
         </Tabs>
       </AppBar>
 
-
-      {/* <TabPanel value={value} index={0} className="tab">
-        <Home />
-      </TabPanel> */}
       <TabPanel value={value} index={0} className="tab">
         <Movies />
       </TabPanel>
@@ -125,6 +119,7 @@ export default function App() {
 //1.pagination
 //2.각 메뉴 눌렀을때 refresh 되도록: search 페이지 보고있을때 search 메뉴 누르면 refresh 되도록
 //3. styling (셀렉트 박스 밑에 indicator 등)
+//4. responsive
 
 
 //icons

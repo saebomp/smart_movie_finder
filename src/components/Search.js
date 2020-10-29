@@ -55,7 +55,8 @@ class Search extends React.Component {
     isLoading: true,
     result: [],
     query:'',
-    type:'movie'
+    type:'movie',
+    msg:'Please enter a search'
   }
 
   fetchMulti = e => {
@@ -80,11 +81,11 @@ class Search extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const {isLoading, result, query} = this.state;
+    const {isLoading, result, query, msg} = this.state;
 
     const updateSearch = e => {
-      this.setState({query:e.target.value})
-      console.log(query)
+      this.setState({query:e.target.value, msg:'Please initiate a search'})
+      // console.log(query)
     }
     
     const updateType = e => {
@@ -140,10 +141,8 @@ class Search extends React.Component {
         </div>
       </div>
       {/* Loading */}
-      <div>{query}</div>
-      {isLoading ? <div className="isLoading">Please enter a search</div> :
+      {isLoading ? <div className="isLoading">{this.state.msg}</div> :
       <div className="movieWrapper">
-        {/* Prompt when it has no result */}
         {result.length === 0 ? (<div className="isLoading">Sorry, there were no results</div>)
         :
         result.map( (movie, index) => (
@@ -173,5 +172,5 @@ export default withStyles(styles)(Search);
 //reference
 //https://stackoverflow.com/questions/59144130/create-a-error-message-for-no-results-in-react-js
 
-
+//Please initiate a search
 //show text while typing React
