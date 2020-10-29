@@ -77,13 +77,3 @@ const SearchList = ({title, original_name, poster_path, popularity, release_date
 
 export default SearchList;
 
-
-//image source
-//https://www.flaticon.com/free-icon/image_1829552?term=image&page=1&position=32
-
-//Tv show genre id api
-//https://api.themoviedb.org/3/genre/tv/list?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US
-
-
-//
-// How to set state from Multiple API call

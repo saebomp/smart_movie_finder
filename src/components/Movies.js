@@ -156,6 +156,8 @@ class Movies extends React.Component {
 
     
 export default withStyles(styles)(Movies);
+//now-playing
+//https://api.themoviedb.org/3/movie/now_playing?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
 
 //popular
 //https://api.themoviedb.org/3/movie/popular?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
@@ -165,5 +167,3 @@ export default withStyles(styles)(Movies);
 
 //upcoming
 //https://api.themoviedb.org/3/movie/upcoming?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
-
-//https://stackoverflow.com/questions/38839510/forcing-a-react-router-link-to-load-a-page-even-if-were-already-on-that-page

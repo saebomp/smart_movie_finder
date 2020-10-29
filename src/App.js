@@ -125,7 +125,6 @@ export default function App() {
 //1.pagination
 //2.각 메뉴 눌렀을때 refresh 되도록: search 페이지 보고있을때 search 메뉴 누르면 refresh 되도록
 //3. styling (셀렉트 박스 밑에 indicator 등)
-//4. search 에서 오류
 
 
 //icons

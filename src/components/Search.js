@@ -80,10 +80,11 @@ class Search extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const {isLoading, result} = this.state;
+    const {isLoading, result, query} = this.state;
 
     const updateSearch = e => {
       this.setState({query:e.target.value})
+      console.log(query)
     }
     
     const updateType = e => {
@@ -139,6 +140,7 @@ class Search extends React.Component {
         </div>
       </div>
       {/* Loading */}
+      <div>{query}</div>
       {isLoading ? <div className="isLoading">Please enter a search</div> :
       <div className="movieWrapper">
         {/* Prompt when it has no result */}
@@ -170,3 +172,6 @@ export default withStyles(styles)(Search);
 
 //reference
 //https://stackoverflow.com/questions/59144130/create-a-error-message-for-no-results-in-react-js
+
+
+//show text while typing React

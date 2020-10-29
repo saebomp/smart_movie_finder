@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 
 import TvList from './TvList'
+import {getTvs} from '../services/api'
 
 //style
 import './../App.css';
@@ -31,37 +32,48 @@ const styles = (theme) => ({
 });
 class Tv extends React.Component {
   state = {
-    // isLoading: true,
-    movies: [],
-    type:'airing_today'
+    isLoading: false,
+    type:'airing_today',
+    tvs: [],
   }
 
-  getTvs = async () => {
-    const API = "45ffcc6c9ffc640faa6714543e2fc6a3";
-    const {data:{results}} = await axios.get(`https://api.themoviedb.org/3/tv/${this.state.type}?api_key=${API}`)
-
-    this.setState({movies:results}) 
+  fetchTvs = e => {
+    const {type} = this.state
+    this.setState({
+      isLoading:true
+    })
+    getTvs(type).then (
+      tvs => {
+        this.setState({
+          isLoading:false,
+          type:type,
+          tvs
+        })
+      },
+      error => {
+        alert('Error', `Something went wrong ${error}`)
+        console.log('error', error)
+      }
+    )
   }
 
   componentDidMount() {
-    this.getTvs();
+    this.fetchTvs();
   }
 
   render() {
     const { classes } = this.props;
-    const {movies} = this.state;
+    const {tvs} = this.state;
 
 
     const updateType = e => {
       e.preventDefault();
       this.setState({type:e.target.value})
-      // console.log('type', this.state)
     }
     const getType = e => {
       e.preventDefault();
       this.setState({type:e.target.value})
-      this.getTvs();
-      // this.setState({result:[]})
+      this.fetchTvs();
     }
 
     return (
@@ -96,15 +108,14 @@ class Tv extends React.Component {
         </div>
         </div>
         <div className="movieWrapper">
-        {movies.map( (movie, index) => (
+        {tvs.map( (tv, index) => (
           <TvList
             key={index}
-            original_name={movie.original_name} 
-            first_air_date={movie.first_air_date} 
-            popularity={movie.popularity} 
-            overview={movie.overview} 
-            poster_path={movie.poster_path}
-            genre_ids={movie.genre_ids}
+            original_name={tv.original_name} 
+            first_air_date={tv.first_air_date} 
+            popularity={tv.popularity} 
+            overview={tv.overview} 
+            poster_path={tv.poster_path}
           />
         ))}
       </div>
@@ -117,7 +128,7 @@ class Tv extends React.Component {
 export default withStyles(styles)(Tv);
 //https://api.themoviedb.org/3/tv/airing_today?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US
 
-//https://api.themoviedb.org/3/tv/latest?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US
+//https://api.themoviedb.org/3/tv/on_the_air?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US
 
 //https://api.themoviedb.org/3/tv/popular?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
 

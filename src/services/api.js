@@ -9,7 +9,6 @@ export const getMovies = async (type) => {
   try {
     const response = await axios.get(url, {
       params: {
-        // query:query,
         api_key:APP_KEY,
         language:'en-US',
         page:1
@@ -42,6 +41,27 @@ export const searchQuery = async (type, query) => {
 
     const result = response2.data.results
     return result
+  }
+  catch(error) {
+    throw error
+  }
+}
+
+export const getTvs = async (type) => { 
+  const url = `${BASE_URL}/tv/${type}`
+
+  try {
+    const response3 = await axios.get(url, {
+      params: {
+        api_key:APP_KEY,
+        language:'en-US',
+        page:1
+      }
+    })
+    console.log('response3', response3)
+
+    const tvs = response3.data.results
+    return tvs
   }
   catch(error) {
     throw error
