@@ -9,21 +9,30 @@ import noimage from '../images/noimage.png'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    marginBottom:'20px'
+    marginBottom:'20px',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+    },
   },
   cover: {
     width: '35%',
     height: '38vw',
+    [theme.breakpoints.down('xs')]: {
+      width:'100%',
+      height: '100vw',
+    },
   },
   details: {
     display: 'flex',
     flexDirection: 'column',
     width:'65%',
+    [theme.breakpoints.down('xs')]: {
+      width:'100%',
+    },
   },
   content: {
     flex: '1 auto',
   },
-
 }));
 
 const MovieList = ({title, poster_path, release_date, popularity, overview}) => {  

@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from "axios";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';

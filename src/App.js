@@ -25,7 +25,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={4}>
+        <Box p={3}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -72,8 +72,21 @@ export default function App() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+  const handle = () => {
+    handleChange();
+    // onChange();
+  }
+  // const onChange = (value, newValue) => {
+  //   if (value === newValue) {
+  //     this.setState({ result:[] })
+  //     console.log('alskjdlakjsldkasd', this.state.result)
+  //   }
+  // }
+
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    console.log('newValue',newValue);
   };
 
   return (
@@ -97,7 +110,9 @@ export default function App() {
         <Movies />
       </TabPanel>
       <TabPanel value={value} index={1} className="tab">
-        <Search />
+        <Search 
+          handleChange={handleChange}
+        />
       </TabPanel>
       <TabPanel value={value} index={2} className="tab">
         <Tv />
@@ -117,10 +132,11 @@ export default function App() {
 
 //할거
 //1.pagination
-//2.각 메뉴 눌렀을때 refresh 되도록: search 페이지 보고있을때 search 메뉴 누르면 refresh 되도록
+//2.각 메뉴 눌렀을때 rerender 되도록: search 페이지 보고있을때 search 메뉴 누르면 refresh 되도록
 //3. styling (셀렉트 박스 밑에 indicator 등)
 //4. responsive
-
+//5. movie 랑 tv에서 버튼없이도 fetch 하는거
+//6. get 방식맞는지
 
 //icons
 // https://material-ui.com/components/material-icons/#material-icons

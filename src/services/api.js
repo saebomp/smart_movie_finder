@@ -3,8 +3,9 @@ import axios from 'axios';
 import {APP_KEY, BASE_URL} from '../config/api_config';
 
 
-export const getMovies = async (type) => { 
+export const getMovies = async (type,page) => { 
   const url = `${BASE_URL}/movie/${type}`
+  
 
   try {
     const response = await axios.get(url, {

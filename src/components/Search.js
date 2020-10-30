@@ -5,7 +5,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import axios from "axios";
 
 import SearchList from './SearchList'
 import './../App.css';
@@ -50,14 +49,17 @@ const styles = (theme) => ({
 
 
 class Search extends React.Component {
-  
-  state = {
+  constructor(props) {
+  super(props);
+  this.state = {
     isLoading: true,
     result: [],
     query:'',
     type:'movie',
     msg:'Please enter a search'
   }
+}
+ 
 
   fetchMulti = e => {
     const {type, query} = this.state
@@ -81,7 +83,7 @@ class Search extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const {isLoading, result, query, msg} = this.state;
+    const {isLoading, result} = this.state;
 
     const updateSearch = e => {
       this.setState({query:e.target.value, msg:'Please initiate a search'})

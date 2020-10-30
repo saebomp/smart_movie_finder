@@ -41,7 +41,7 @@ class Movies extends React.Component {
     page:1
   }
 
-  fetchMovies = e => {
+  fetchMovies = () => {
 
     const {type} = this.state
 
@@ -67,31 +67,31 @@ class Movies extends React.Component {
     this.fetchMovies();
   }
   
-
   
-
+  
+  
   render() {
     const { classes } = this.props;
     const { movies } = this.state;
-
+    
     const updateType = e => {
       e.preventDefault();
       this.setState({type:e.target.value})
     }
-  
+    
     const getType = e => {
       e.preventDefault();
       this.setState({type:e.target.value})
       this.fetchMovies();
     }
-    const add = () => {
-      this.setState({page:this.state.page+1})
-      this.getMovies();
-    }
-    const minus = () => {
-      this.setState({page:this.state.page-1})
-      this.getMovies();
-    }
+    // const add = () => {
+    //   this.setState({page:this.state.page+1})
+    //   this.fetchMovies();
+    // }
+    // const minus = () => {
+    //   this.setState({page:this.state.page-1})
+    //   this.fetchMovies();
+    // }
 
     return (
     <div className="wrapper">
@@ -136,7 +136,7 @@ class Movies extends React.Component {
           />
         ))}
       </div>
-      <div className="pagination">
+      {/* <div className="pagination">
         <SkipPreviousRoundedIcon 
           fontSize="large" 
           style={{color:"#dedede"}}
@@ -148,7 +148,7 @@ class Movies extends React.Component {
           style={{color:"#dedede"}}
           onClick={add}
         />
-      </div>
+      </div> */}
     </div>
     );
   }
