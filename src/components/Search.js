@@ -61,6 +61,15 @@ class Search extends React.Component {
 }
  
 
+  updateSearch = e => {
+    this.setState({query:e.target.value, msg:'Please initiate a search'})
+    // console.log(query)
+  }
+
+  updateType = e => {
+    e.preventDefault();
+    this.setState({type:e.target.value})
+  }
   fetchMulti = e => {
     const {type, query} = this.state
 
@@ -85,15 +94,6 @@ class Search extends React.Component {
     const { classes } = this.props;
     const {isLoading, result} = this.state;
 
-    const updateSearch = e => {
-      this.setState({query:e.target.value, msg:'Please initiate a search'})
-      // console.log(query)
-    }
-    
-    const updateType = e => {
-      e.preventDefault();
-      this.setState({type:e.target.value})
-    }
 
     const getSearch = e => {
       e.preventDefault();
@@ -109,7 +109,7 @@ class Search extends React.Component {
         <div>
           <form 
             className="inputWrapper" 
-            onSubmit = {getSearch}
+            onSubmit={getSearch}
             >
             <TextField 
               classes={{root: classes.root}}
@@ -119,11 +119,11 @@ class Search extends React.Component {
               type="text" 
               variant="outlined" 
               value={this.state.query} 
-              onChange={updateSearch}
+              onChange={this.updateSearch}
             />
             <Select
               className={classes.selectControl}
-              onChange={updateType}
+              onChange={this.updateType}
               defaultValue="movie"
             >
               <MenuItem value="movie">Movie</MenuItem>

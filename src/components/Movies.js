@@ -37,7 +37,7 @@ class Movies extends React.Component {
     isLoading: false,
     type : 'now_playing',
     movies: [],
-    page:1
+    page:1,
   }
   this.getType = this.getType.bind(this);
 }
@@ -136,18 +136,10 @@ class Movies extends React.Component {
 
     
 export default withStyles(styles)(Movies);
-//now-playing
-//https://api.themoviedb.org/3/movie/now_playing?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
-
-//popular
-//https://api.themoviedb.org/3/movie/popular?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
-
-//top rated
-//https://api.themoviedb.org/3/movie/top_rated?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
-
-//upcoming
-//https://api.themoviedb.org/3/movie/upcoming?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
 
 //Reference
 //https://medium.com/@ian.mundy/async-event-handlers-in-react-a1590ed24399
 //https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94
+
+//page
+//https://www.themoviedb.org/talk/5bce078d9251410574000bfb

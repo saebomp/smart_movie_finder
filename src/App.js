@@ -123,6 +123,5 @@ export default function App() {
 //1.pagination
 //2.각 메뉴 눌렀을때 rerender 되도록: search 페이지 보고있을때 search 메뉴 누르면 refresh 되도록
 //3. styling (셀렉트 박스 밑에 indicator 등)
-//4. movie 랑 tv에서 버튼없이도 fetch 하는거
 //5. get 방식맞는지
 //6. 마지막에 주석쓴거 다 지울것
