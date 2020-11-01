@@ -72,17 +72,6 @@ export default function App() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const handle = () => {
-    handleChange();
-    // onChange();
-  }
-  // const onChange = (value, newValue) => {
-  //   if (value === newValue) {
-  //     this.setState({ result:[] })
-  //     console.log('alskjdlakjsldkasd', this.state.result)
-  //   }
-  // }
-
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

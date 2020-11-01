@@ -2,8 +2,6 @@ import React from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import SearchIcon from '@material-ui/icons/Search';
 // import Pagination from '@material-ui/lab/Pagination';
 import SkipNextRoundedIcon from '@material-ui/icons/SkipNextRounded';
 import SkipPreviousRoundedIcon from '@material-ui/icons/SkipPreviousRounded';
@@ -46,12 +44,11 @@ class Movies extends React.Component {
 
  async getType(e) {
   await this.setState({type:e.target.value})
-  await this.fetchMovies();
+  this.fetchMovies();
   console.log('this.state.type', this.state.type)
 }
 
   fetchMovies = () => {
-
     const {type} = this.state
 
     this.setState({
@@ -151,9 +148,6 @@ export default withStyles(styles)(Movies);
 //upcoming
 //https://api.themoviedb.org/3/movie/upcoming?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
 
-
-//https://stackoverflow.com/questions/28868071/onchange-event-using-react-js-for-drop-down
-
-//https://stackoverflow.com/questions/60265378/onchange-for-storing-value-of-selected-drop-down-option
-
-//Material UI SelectField onChange not working
+//Reference
+//https://medium.com/@ian.mundy/async-event-handlers-in-react-a1590ed24399
+//https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94
