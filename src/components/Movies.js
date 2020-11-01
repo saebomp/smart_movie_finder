@@ -33,13 +33,22 @@ const styles = (theme) => ({
   }
 });
 class Movies extends React.Component {
-  
-  state = {
+  constructor(props){
+  super(props);
+  this.state = {
     isLoading: false,
     type : 'now_playing',
     movies: [],
     page:1
   }
+  this.getType = this.getType.bind(this);
+}
+
+ async getType(e) {
+  await this.setState({type:e.target.value})
+  await this.fetchMovies();
+  console.log('this.state.type', this.state.type)
+}
 
   fetchMovies = () => {
 
@@ -66,24 +75,11 @@ class Movies extends React.Component {
   componentDidMount() {
     this.fetchMovies();
   }
-  
-  
-  
-  
+
   render() {
     const { classes } = this.props;
     const { movies } = this.state;
-    
-    const updateType = e => {
-      e.preventDefault();
-      this.setState({type:e.target.value})
-    }
-    
-    const getType = e => {
-      e.preventDefault();
-      this.setState({type:e.target.value})
-      this.fetchMovies();
-    }
+   
     // const add = () => {
     //   this.setState({page:this.state.page+1})
     //   this.fetchMovies();
@@ -98,30 +94,17 @@ class Movies extends React.Component {
       <div className="heading">
         <div>Movies</div>
         <div>
-          <form 
-            className="inputWrapper" 
-            onSubmit={getType}
-            >
-            <Select
-              className={classes.selectControl}
-              onChange={updateType}
-              defaultValue="now_playing"
-            > 
-              <MenuItem value="now_playing">Now-playing</MenuItem>
-              <MenuItem value="popular">Popular</MenuItem>
-              <MenuItem value="top_rated">Top-rated</MenuItem>
-              <MenuItem value="upcoming">Upcoming</MenuItem>
-            </Select>
-            <Button 
-              variant="contained"
-              type="submit"
-              value="submit"
-            >
-            <SearchIcon 
-            fontSize="small" 
-            />
-            </Button>
-          </form> 
+          <Select
+            className={classes.selectControl}
+            onChange={this.getType}
+            defaultValue="now_playing"
+            value={this.state.type}
+          > 
+            <MenuItem value="now_playing">Now-playing</MenuItem>
+            <MenuItem value="popular">Popular</MenuItem>
+            <MenuItem value="top_rated">Top-rated</MenuItem>
+            <MenuItem value="upcoming">Upcoming</MenuItem>
+          </Select>
         </div>
         </div>
         <div className="movieWrapper">
@@ -167,3 +150,10 @@ export default withStyles(styles)(Movies);
 
 //upcoming
 //https://api.themoviedb.org/3/movie/upcoming?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
+
+
+//https://stackoverflow.com/questions/28868071/onchange-event-using-react-js-for-drop-down
+
+//https://stackoverflow.com/questions/60265378/onchange-for-storing-value-of-selected-drop-down-option
+
+//Material UI SelectField onChange not working
