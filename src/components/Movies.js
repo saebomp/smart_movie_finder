@@ -2,6 +2,7 @@ import React from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
+import ReactPaginate from 'react-paginate';
 // import Pagination from '@material-ui/lab/Pagination';
 import SkipNextRoundedIcon from '@material-ui/icons/SkipNextRounded';
 import SkipPreviousRoundedIcon from '@material-ui/icons/SkipPreviousRounded';
@@ -34,33 +35,38 @@ class Movies extends React.Component {
   constructor(props){
   super(props);
   this.state = {
-    isLoading: false,
     type : 'now_playing',
     movies: [],
     page:1,
+    total_pages:''
   }
   this.getType = this.getType.bind(this);
+  this.handlePageClick = this.handlePageClick.bind(this);
 }
 
  async getType(e) {
   await this.setState({type:e.target.value})
-  this.fetchMovies();
+  this.fetchMovies(this.setState({page:1}));
   console.log('this.state.type', this.state.type)
 }
 
+async handlePageClick(e) {
+  await this.setState({page:e.selected+1})
+  this.fetchMovies();
+  console.log('this.state.page', this.state.page)
+
+}
+
   fetchMovies = () => {
-    const {type} = this.state
+    const {type,page} = this.state
 
-    this.setState({
-      isLoading:true
-    })
-
-    getMovies(type).then(
+    getMovies(type,page).then(
       movies => {
         this.setState({
-          isLoading:false,
           type:type,
-          movies
+          movies:[...movies.results],
+          total_pages:movies.total_pages,
+          page:page
         })
       },
       error => {
@@ -105,6 +111,8 @@ class Movies extends React.Component {
         </div>
         </div>
         <div className="movieWrapper">
+
+        <div>{this.state.total_pages}</div>
         {movies.map( (movie, index) => (
           <MovieList
             key={index}
@@ -129,6 +137,21 @@ class Movies extends React.Component {
           onClick={add}
         />
       </div> */}
+      <ReactPaginate
+        previousLabel={"prev"}
+        nextLabel={"next"}
+        breakLabel={"..."}
+        breakClassName={"break-me"}
+        pageCount={5}
+        pageCount={this.state.total_pages}
+        marginPagesDisplayed={1}
+        pageRangeDisplayed={2}
+        containerClassName={"pagination"}
+        subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+        // initialPage={1}
+        onPageChange={this.handlePageClick}
+        />
     </div>
     );
   }
@@ -138,8 +161,10 @@ class Movies extends React.Component {
 export default withStyles(styles)(Movies);
 
 //Reference
-//https://medium.com/@ian.mundy/async-event-handlers-in-react-a1590ed24399
-//https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94
+// https://medium.com/@ian.mundy/async-event-handlers-in-react-a1590ed24399
+// https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94
 
-//page
-//https://www.themoviedb.org/talk/5bce078d9251410574000bfb
+//pagination
+// https://www.npmjs.com/package/react-paginate
+// https://medium.com/how-to-react/create-pagination-in-reactjs-e4326c1b9855
+// https://stackoverflow.com/questions/54968426/react-paginate-is-not-clickable

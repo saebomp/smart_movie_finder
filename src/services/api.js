@@ -4,20 +4,20 @@ import {APP_KEY, BASE_URL} from '../config/api_config';
 
 
 export const getMovies = async (type,page) => { 
-  const url = `${BASE_URL}/movie/${type}`
+  const url = `${BASE_URL}/movie/${type}?api_key=${APP_KEY}&page=${page}`
   
 
   try {
     const response = await axios.get(url, {
       params: {
-        api_key:APP_KEY,
+        // api_key:APP_KEY,
         language:'en-US',
-        page:1
+        // page:1
       }
     })
     console.log('response', response)
 
-    const movies = response.data.results
+    const movies = response.data;
     return movies
   }
   catch(error) {

@@ -56,6 +56,11 @@ nav ul li {
   width: 100%;
 }
 
+.active {
+  border:1px solid #000;
+  padding:2px
+}
+
 .pagination {
   padding:50px;
   text-align: center;
