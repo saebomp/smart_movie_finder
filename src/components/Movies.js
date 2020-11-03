@@ -149,7 +149,7 @@ async handlePageClick(e) {
         containerClassName={"pagination"}
         subContainerClassName={"pages pagination"}
         activeClassName={"active"}
-        // initialPage={1}
+        forcePage={this.state.page-1}
         onPageChange={this.handlePageClick}
         />
     </div>
