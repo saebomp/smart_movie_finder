@@ -164,11 +164,15 @@ render() {
             poster_path={movie.poster_path}
           />
         ))}
+        {result.length >= 1 ?
         <Pagination 
           total_pages={this.state.total_pages}
           page={this.state.page}
           handlePageClick={this.handlePageClick}
         />
+        :
+        <div></div>
+        } 
       </div>
     }
     </div>
