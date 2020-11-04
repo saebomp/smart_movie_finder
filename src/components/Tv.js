@@ -7,9 +7,6 @@ import TvList from './TvList'
 import Pagination from './Pagination';
 import {getTvs} from '../services/api'
 
-//style
-import './../App.css';
-
 const styles = (theme) => ({
   selectControl: {
     backgroundColor:'#fff',
@@ -120,10 +117,3 @@ fetchTvs = e => {
     
 export default withStyles(styles)(Tv);
 
-//https://api.themoviedb.org/3/tv/airing_today?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US
-
-//https://api.themoviedb.org/3/tv/on_the_air?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US
-
-//https://api.themoviedb.org/3/tv/popular?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1
-
-//https://api.themoviedb.org/3/tv/top_rated?api_key=45ffcc6c9ffc640faa6714543e2fc6a3&language=en-US&page=1

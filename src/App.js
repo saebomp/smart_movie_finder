@@ -114,10 +114,7 @@ export default function App() {
 // https://developers.themoviedb.org/3/movies/get-popular-movies
 
 //할거
-//1.pagination
-//2.각 메뉴 눌렀을때 rerender 되도록: search 페이지 보고있을때 search 메뉴 누르면 refresh 되도록
 //3. styling (셀렉트 박스 밑에 indicator 등)
-//4. get 방식맞는지
 //5. 어떤 펑션이 뭔지 주석 달것
 //6. 마지막에 주석 다 지울것 (packge.json 에서 안쓴거 삭제)
 //안쓰는 css 지울것

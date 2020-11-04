@@ -43,7 +43,7 @@ const styles = (theme) => ({
     '&:hover' : {
       borderWidth:0,
       backgroundColor: "#FFF"
-    }
+    },
   }
 });
 
@@ -136,6 +136,7 @@ render() {
               <MenuItem value="tv">TV</MenuItem>
             </Select>
             <Button 
+              className={classes.button}
               variant="contained"
               type="submit"
               value="submit"
@@ -182,6 +183,6 @@ render() {
 
 export default withStyles(styles)(Search);
 
-//reference
+//Reference
 //https://stackoverflow.com/questions/59144130/create-a-error-message-for-no-results-in-react-js
 

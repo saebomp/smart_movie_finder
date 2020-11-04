@@ -7,9 +7,6 @@ import MovieList from './MovieList'
 import Pagination from './Pagination';
 import {getMovies} from '../services/api'
 
-//style
-import './../App.css';
-
 const styles = (theme) => ({
   selectControl: {
     backgroundColor:'#fff',
@@ -25,7 +22,7 @@ const styles = (theme) => ({
     '&:hover' : {
       borderWidth:0,
       backgroundColor: "#FFF"
-    }
+    },
   }
 });
 class Movies extends React.Component {
@@ -41,18 +38,15 @@ class Movies extends React.Component {
   this.handlePageClick = this.handlePageClick.bind(this);
 }
 
- async getType(e) {
-  await this.setState({type:e.target.value})
-  this.fetchMovies(this.setState({page:1}));
-  console.log('this.state.type', this.state.type)
-}
+  async getType(e) {
+    await this.setState({type:e.target.value})
+    this.fetchMovies(this.setState({page:1}));
+  }
 
-async handlePageClick(e) {
-  await this.setState({page:e.selected+1})
-  this.fetchMovies();
-  console.log('this.state.page', this.state.page)
-
-}
+  async handlePageClick(e) {
+    await this.setState({page:e.selected+1})
+    this.fetchMovies();
+  }
 
   fetchMovies = () => {
     const {type,page} = this.state
@@ -126,8 +120,6 @@ export default withStyles(styles)(Movies);
 //Reference
 // https://medium.com/@ian.mundy/async-event-handlers-in-react-a1590ed24399
 // https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94
-
-//pagination
 // https://www.npmjs.com/package/react-paginate
 // https://medium.com/how-to-react/create-pagination-in-reactjs-e4326c1b9855
 // https://stackoverflow.com/questions/54968426/react-paginate-is-not-clickable
