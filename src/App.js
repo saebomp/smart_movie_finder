@@ -113,12 +113,6 @@ export default function App() {
 // API
 // https://developers.themoviedb.org/3/movies/get-popular-movies
 
-// Movie genre
-//https://www.themoviedb.org/talk/5daf6eb0ae36680011d7e6ee
-
-// Source
-//https://stackoverflow.com/questions/61615574/translate-gendre-ids-from-tmdb-api-in-react-native-application
-
 //할거
 //1.pagination
 //2.각 메뉴 눌렀을때 rerender 되도록: search 페이지 보고있을때 search 메뉴 누르면 refresh 되도록

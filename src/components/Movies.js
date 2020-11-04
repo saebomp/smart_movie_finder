@@ -2,12 +2,9 @@ import React from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
-import ReactPaginate from 'react-paginate';
-// import Pagination from '@material-ui/lab/Pagination';
-import SkipNextRoundedIcon from '@material-ui/icons/SkipNextRounded';
-import SkipPreviousRoundedIcon from '@material-ui/icons/SkipPreviousRounded';
 
 import MovieList from './MovieList'
+import Pagination from './Pagination';
 import {getMovies} from '../services/api'
 
 //style
@@ -82,15 +79,6 @@ async handlePageClick(e) {
   render() {
     const { classes } = this.props;
     const { movies } = this.state;
-   
-    // const add = () => {
-    //   this.setState({page:this.state.page+1})
-    //   this.fetchMovies();
-    // }
-    // const minus = () => {
-    //   this.setState({page:this.state.page-1})
-    //   this.fetchMovies();
-    // }
 
     return (
     <div className="wrapper">
@@ -111,48 +99,23 @@ async handlePageClick(e) {
         </div>
         </div>
         <div className="movieWrapper">
-
-        <div>{this.state.total_pages}</div>
-        {movies.map( (movie, index) => (
-          <MovieList
-            key={index}
-            title={movie.title} 
-            release_date={movie.release_date} 
-            popularity={movie.popularity} 
-            overview={movie.overview} 
-            poster_path={movie.poster_path}
-          />
-        ))}
+          {movies.map( (movie, index) => (
+            <MovieList
+              key={index}
+              title={movie.title} 
+              release_date={movie.release_date} 
+              popularity={movie.popularity} 
+              overview={movie.overview} 
+              poster_path={movie.poster_path}
+            />
+          ))}
+        </div>
+        <Pagination 
+          total_pages={this.state.total_pages}
+          page={this.state.page}
+          handlePageClick={this.handlePageClick}
+        />
       </div>
-      {/* <div className="pagination">
-        <SkipPreviousRoundedIcon 
-          fontSize="large" 
-          style={{color:"#dedede"}}
-          onClick={minus}
-        />
-          <span>{this.state.page}</span> 
-        <SkipNextRoundedIcon 
-          fontSize="large" 
-          style={{color:"#dedede"}}
-          onClick={add}
-        />
-      </div> */}
-      <ReactPaginate
-        previousLabel={"prev"}
-        nextLabel={"next"}
-        breakLabel={"..."}
-        breakClassName={"break-me"}
-        pageCount={5}
-        pageCount={this.state.total_pages}
-        marginPagesDisplayed={1}
-        pageRangeDisplayed={2}
-        containerClassName={"pagination"}
-        subContainerClassName={"pages pagination"}
-        activeClassName={"active"}
-        forcePage={this.state.page-1}
-        onPageChange={this.handlePageClick}
-        />
-    </div>
     );
   }
 }

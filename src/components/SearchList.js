@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -39,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 const SearchList = ({title, original_name, poster_path, popularity, release_date, first_air_date, overview}) => {
 
   const classes = useStyles();
-  const theme = useTheme();
 
   return (
     <Card className={classes.root}>

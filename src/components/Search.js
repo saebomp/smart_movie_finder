@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 
 import SearchList from './SearchList'
-import './../App.css';
+import Pagination from './Pagination';
 import {searchQuery} from '../services/api'
 
 const styles = (theme) => ({
@@ -47,7 +47,6 @@ const styles = (theme) => ({
   }
 });
 
-
 class Search extends React.Component {
   constructor(props) {
   super(props);
@@ -56,30 +55,45 @@ class Search extends React.Component {
     result: [],
     query:'',
     type:'movie',
-    msg:'Please enter a search'
+    msg:'Please enter a search',
+    page:1,
+    total_pages:''
   }
+  this.handlePageClick = this.handlePageClick.bind(this);
 }
- 
 
   updateSearch = e => {
-    this.setState({query:e.target.value, msg:'Please initiate a search'})
-    // console.log(query)
+    this.setState({query:e.target.value, msg:'Please initiate a search', page:1})
   }
 
   updateType = e => {
     e.preventDefault();
-    this.setState({type:e.target.value})
+    this.setState({type:e.target.value, page:1})
   }
-  fetchMulti = e => {
-    const {type, query} = this.state
 
-    searchQuery(type, query).then(
+  getSearch = e => {
+    e.preventDefault();
+    this.setState({query:e.target.value, type:e.target.value})
+    this.fetchMulti(this.setState({page:1}));
+  }
+
+  async handlePageClick(e) {
+    await this.setState({page:e.selected+1})
+    this.fetchMulti();
+  }
+
+  fetchMulti = e => {
+    const {type, query, page} = this.state
+
+    searchQuery(type, query, page).then(
       result => {
         this.setState({
           isLoading:false,
-          result,
+          result:[...result.results],
           query:query,
-          type:type
+          type:type,
+          total_pages:result.total_pages,
+          page:page
         })
       },
       error => {
@@ -87,20 +101,11 @@ class Search extends React.Component {
         console.log('error', error)
       } 
     )
-
   }
 
-  render() {
-    const { classes } = this.props;
-    const {isLoading, result} = this.state;
-
-
-    const getSearch = e => {
-      e.preventDefault();
-      this.setState({query:e.target.value, type:e.target.value})
-      this.fetchMulti();
-    }
-
+render() {
+  const { classes } = this.props;
+  const {isLoading, result} = this.state;
 
   return (
     <div className="wrapper">
@@ -109,7 +114,7 @@ class Search extends React.Component {
         <div>
           <form 
             className="inputWrapper" 
-            onSubmit={getSearch}
+            onSubmit={this.getSearch}
             >
             <TextField 
               classes={{root: classes.root}}
@@ -158,8 +163,12 @@ class Search extends React.Component {
             overview={movie.overview} 
             poster_path={movie.poster_path}
           />
-        ))
-        }
+        ))}
+        <Pagination 
+          total_pages={this.state.total_pages}
+          page={this.state.page}
+          handlePageClick={this.handlePageClick}
+        />
       </div>
     }
     </div>
@@ -169,10 +178,6 @@ class Search extends React.Component {
 
 export default withStyles(styles)(Search);
 
-
-
 //reference
 //https://stackoverflow.com/questions/59144130/create-a-error-message-for-no-results-in-react-js
 
-//Please initiate a search
-//show text while typing React

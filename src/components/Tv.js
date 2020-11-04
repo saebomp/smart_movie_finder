@@ -4,6 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 
 import TvList from './TvList'
+import Pagination from './Pagination';
 import {getTvs} from '../services/api'
 
 //style
@@ -31,29 +32,35 @@ class Tv extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-    isLoading: false,
-    type:'airing_today',
-    tvs: [],
-  }
+      type:'airing_today',
+      tvs: [],
+      page:1,
+      total_pages:''
+    }
   this.getType = this.getType.bind(this);
+  this.handlePageClick = this.handlePageClick.bind(this);
 }
 
 async getType(e) {
   await this.setState({type:e.target.value})
+  this.fetchTvs(this.setState({page:1}));
+}
+
+async handlePageClick(e) {
+  await this.setState({page:e.selected+1})
   this.fetchTvs();
 }
 
 fetchTvs = e => {
-  const {type} = this.state
-  this.setState({
-    isLoading:true
-  })
-  getTvs(type).then (
+  const {type,page} = this.state
+
+  getTvs(type,page).then (
     tvs => {
       this.setState({
-        isLoading:false,
         type:type,
-        tvs
+        tvs:[...tvs.results],
+        total_pages:tvs.total_pages,
+        page:page
       })
     },
     error => {
@@ -99,6 +106,11 @@ fetchTvs = e => {
             poster_path={tv.poster_path}
           />
         ))}
+        <Pagination 
+          total_pages={this.state.total_pages}
+          page={this.state.page}
+          handlePageClick={this.handlePageClick}
+        />
       </div>
     </div>
     );

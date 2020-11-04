@@ -56,10 +56,7 @@ nav ul li {
   width: 100%;
 }
 
-.active {
-  border:1px solid #000;
-  padding:2px
-}
+/*pagination*/
 
 .pagination {
   padding:50px;
@@ -69,21 +66,44 @@ nav ul li {
   justify-content: center;
 }
 
-.pagination span {
-  background-color: #dedede;
-  border-radius: 50%;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  padding: 10px;
-  line-height: 1;
-  font-size: 18px;
-  margin: 0 15px;
+.pagination li {
+  margin:0 5px;
+  border-radius:100%;
+  width:16px;
+  height:16px;
+  padding:10px;
+  line-height: 16px;
+  cursor:pointer
 }
 
-.pagination svg {
-  cursor: pointer;
+.pagination li.previous {
+  margin: 0 10px;
+  width:auto;
 }
+
+.pagination li.disabled {
+  cursor:auto
+}
+
+.next {
+  margin: 0 10px;
+  width:auto;
+}
+
+.pagination li.active {
+  background-color:#00293b;
+  color:#fff
+}
+
+.pagination li a:hover:focus:active {
+  border: 1px solid #00293b !important;
+  outline:none !important;
+}
+
+
+
+
+
 
 .movieList .title {
  background-color: #00293b;
