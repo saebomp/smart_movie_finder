@@ -87,11 +87,6 @@ class Search extends React.Component {
     this.fetchMulti(this.setState({limit1:0, limit2:10}));
   }
 
-  async handlePageClick(e) {
-    await this.setState({page:e.selected+1})
-    this.fetchMulti();
-  }
-
   fetchMulti = e => {
     const {type, query} = this.state
 
