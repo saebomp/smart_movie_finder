@@ -59,7 +59,6 @@ class Search extends React.Component {
     limit1: 0,
     limit2 : 10
   }
-  this.handlePageClick = this.handlePageClick.bind(this);
 }
 
   updateSearch = e => {
@@ -169,7 +168,8 @@ render() {
             poster_path={movie.poster_path}
           />
         ))}
-        {result.length >= 1 ?
+        {/* when it has less than 10 result, pagination will not show */}
+        {result.length >= 10 ?
         <Pagination 
           limit2={limit2}
           handleNextPage={this.handleNextPage}
