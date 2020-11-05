@@ -4,7 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 
 import MovieList from './MovieList'
-import Pagination from './Pagination';
+import Pagination from './Pagination'
 import {getMovies} from '../services/api'
 
 const styles = (theme) => ({
@@ -31,33 +31,35 @@ class Movies extends React.Component {
   this.state = {
     type : 'now_playing',
     movies: [],
-    page:1,
-    total_pages:''
+    limit1: 0,
+    limit2 : 10
   }
   this.getType = this.getType.bind(this);
-  this.handlePageClick = this.handlePageClick.bind(this);
 }
 
   async getType(e) {
     await this.setState({type:e.target.value})
-    this.fetchMovies(this.setState({page:1}));
+    this.fetchMovies(this.setState({limit1:0, limit2:10}));
   }
 
-  async handlePageClick(e) {
-    await this.setState({page:e.selected+1})
-    this.fetchMovies();
+  handleNextPage = (e) => {
+    e.preventDefault();
+    this.fetchMovies(this.setState({limit1:10, limit2:20}));
+  }
+
+  handlePrevPage = (e) => {
+    e.preventDefault();
+    this.fetchMovies(this.setState({limit1:0, limit2:10}));
   }
 
   fetchMovies = () => {
-    const {type,page} = this.state
+    const {type} = this.state
 
-    getMovies(type,page).then(
+    getMovies(type).then(
       movies => {
         this.setState({
           type:type,
-          movies:[...movies.results],
-          total_pages:movies.total_pages,
-          page:page
+          movies
         })
       },
       error => {
@@ -72,7 +74,7 @@ class Movies extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { movies } = this.state;
+    const { movies, limit1, limit2} = this.state;
 
     return (
     <div className="wrapper">
@@ -93,7 +95,7 @@ class Movies extends React.Component {
         </div>
         </div>
         <div className="movieWrapper">
-          {movies.map( (movie, index) => (
+          {movies.slice(limit1, limit2).map( (movie, index) => (
             <MovieList
               key={index}
               title={movie.title} 
@@ -103,12 +105,12 @@ class Movies extends React.Component {
               poster_path={movie.poster_path}
             />
           ))}
+          <Pagination 
+            limit2={limit2}
+            handleNextPage={this.handleNextPage}
+            handlePrevPage={this.handlePrevPage}
+          />
         </div>
-        <Pagination 
-          total_pages={this.state.total_pages}
-          page={this.state.page}
-          handlePageClick={this.handlePageClick}
-        />
       </div>
     );
   }
@@ -120,6 +122,5 @@ export default withStyles(styles)(Movies);
 //Reference
 // https://medium.com/@ian.mundy/async-event-handlers-in-react-a1590ed24399
 // https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94
-// https://www.npmjs.com/package/react-paginate
-// https://medium.com/how-to-react/create-pagination-in-reactjs-e4326c1b9855
-// https://stackoverflow.com/questions/54968426/react-paginate-is-not-clickable
+// https://stackoverflow.com/questions/54419220/react-native-display-x-number-of-rows-from-an-array
+// https://stackoverflow.com/questions/63193903/react-limit-api-results-and-view-more-items

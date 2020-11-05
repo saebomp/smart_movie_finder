@@ -41,48 +41,11 @@
 }
 
 /*pagination*/
-
-.pagination {
-  padding:50px;
-  text-align: center;
-  margin:0;
-  display: flex;
-  justify-content: center;
-}
-
-.pagination li {
-  margin:0 5px;
-  border-radius:100%;
-  width:16px;
-  height:16px;
-  padding:10px;
-  line-height: 16px;
-  cursor:pointer
-}
-
-.pagination li.previous {
-  margin: 0 10px;
-  width:auto;
-}
-
-.pagination li.disabled {
-  cursor:auto
-}
-
 .next {
-  margin: 0 10px;
-  width:auto;
+  text-align: center;
 }
 
-.pagination li.active {
-  background-color:#00293b;
-  color:#fff
-}
 
-.pagination li a:hover:focus:active {
-  border: 1px solid #00293b !important;
-  outline:none !important;
-}
 
 .movieList .title {
  background-color: #00293b;

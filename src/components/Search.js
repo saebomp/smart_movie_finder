@@ -56,25 +56,35 @@ class Search extends React.Component {
     query:'',
     type:'movie',
     msg:'Please enter a search',
-    page:1,
-    total_pages:''
+    limit1: 0,
+    limit2 : 10
   }
   this.handlePageClick = this.handlePageClick.bind(this);
 }
 
   updateSearch = e => {
-    this.setState({query:e.target.value, msg:'Please initiate a search', page:1})
+    this.setState({query:e.target.value, msg:'Please initiate a search'})
   }
 
   updateType = e => {
     e.preventDefault();
-    this.setState({type:e.target.value, page:1})
+    this.setState({type:e.target.value})
   }
 
   getSearch = e => {
     e.preventDefault();
     this.setState({query:e.target.value, type:e.target.value})
-    this.fetchMulti(this.setState({page:1}));
+    this.fetchMulti(this.setState({limit1:0, limit2:10}));
+  }
+
+  handleNextPage = (e) => {
+    e.preventDefault();
+    this.fetchMulti(this.setState({limit1:10, limit2:20}));
+  }
+
+  handlePrevPage = (e) => {
+    e.preventDefault();
+    this.fetchMulti(this.setState({limit1:0, limit2:10}));
   }
 
   async handlePageClick(e) {
@@ -83,17 +93,15 @@ class Search extends React.Component {
   }
 
   fetchMulti = e => {
-    const {type, query, page} = this.state
+    const {type, query} = this.state
 
-    searchQuery(type, query, page).then(
+    searchQuery(type, query).then(
       result => {
         this.setState({
           isLoading:false,
-          result:[...result.results],
+          result,
           query:query,
-          type:type,
-          total_pages:result.total_pages,
-          page:page
+          type:type
         })
       },
       error => {
@@ -105,7 +113,7 @@ class Search extends React.Component {
 
 render() {
   const { classes } = this.props;
-  const {isLoading, result} = this.state;
+  const {isLoading, result, limit1, limit2} = this.state;
 
   return (
     <div className="wrapper">
@@ -148,12 +156,13 @@ render() {
           </form>
         </div>
       </div>
-      {/* Loading */}
       {isLoading ? <div className="isLoading">{this.state.msg}</div> :
       <div className="movieWrapper">
+        {/* when there were no results */}
         {result.length === 0 ? (<div className="isLoading">Sorry, there were no results</div>)
         :
-        result.map( (movie, index) => (
+        // it shows the first 10 results
+        result.slice(limit1, limit2).map( (movie, index) => (
           <SearchList
             key={index}
             title={movie.title} 
@@ -167,13 +176,13 @@ render() {
         ))}
         {result.length >= 1 ?
         <Pagination 
-          total_pages={this.state.total_pages}
-          page={this.state.page}
-          handlePageClick={this.handlePageClick}
+          limit2={limit2}
+          handleNextPage={this.handleNextPage}
+          handlePrevPage={this.handlePrevPage}
         />
         :
         <div></div>
-        } 
+        }
       </div>
     }
     </div>

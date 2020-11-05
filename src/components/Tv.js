@@ -31,33 +31,35 @@ class Tv extends React.Component {
     this.state = {
       type:'airing_today',
       tvs: [],
-      page:1,
-      total_pages:''
+      limit1: 0,
+      limit2: 10
     }
   this.getType = this.getType.bind(this);
-  this.handlePageClick = this.handlePageClick.bind(this);
 }
 
 async getType(e) {
   await this.setState({type:e.target.value})
-  this.fetchTvs(this.setState({page:1}));
+  this.fetchTvs(this.setState({limit1:0, limit2:10}));
 }
 
-async handlePageClick(e) {
-  await this.setState({page:e.selected+1})
-  this.fetchTvs();
+handleNextPage = (e) => {
+  e.preventDefault();
+  this.fetchTvs(this.setState({limit1:10, limit2:20}));
 }
 
-fetchTvs = e => {
-  const {type,page} = this.state
+handlePrevPage = (e) => {
+  e.preventDefault();
+  this.fetchTvs(this.setState({limit1:0, limit2:10}));
+}
 
-  getTvs(type,page).then (
+fetchTvs = () => {
+  const {type} = this.state
+
+  getTvs(type).then (
     tvs => {
       this.setState({
         type:type,
-        tvs:[...tvs.results],
-        total_pages:tvs.total_pages,
-        page:page
+        tvs,
       })
     },
     error => {
@@ -73,7 +75,7 @@ fetchTvs = e => {
 
   render() {
     const { classes } = this.props;
-    const {tvs} = this.state;
+    const {tvs,limit1,limit2} = this.state;
 
     return (
     <div className="wrapper">
@@ -93,7 +95,7 @@ fetchTvs = e => {
         </div>
         </div>
         <div className="movieWrapper">
-        {tvs.map( (tv, index) => (
+        {tvs.slice(limit1, limit2).map( (tv, index) => (
           <TvList
             key={index}
             original_name={tv.original_name} 
@@ -104,9 +106,10 @@ fetchTvs = e => {
           />
         ))}
         <Pagination 
-          total_pages={this.state.total_pages}
-          page={this.state.page}
-          handlePageClick={this.handlePageClick}
+          limit1={limit1}
+          limit2={limit2}
+          handleNextPage={this.handleNextPage}
+          handlePrevPage={this.handlePrevPage}
         />
       </div>
     </div>

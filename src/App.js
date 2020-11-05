@@ -114,7 +114,4 @@ export default function App() {
 // https://developers.themoviedb.org/3/movies/get-popular-movies
 
 //할거
-//3. styling (셀렉트 박스 밑에 indicator 등)
 //5. 어떤 펑션이 뭔지 주석 달것
-//6. 마지막에 주석 다 지울것 (packge.json 에서 안쓴거 삭제)
-//안쓰는 css 지울것
