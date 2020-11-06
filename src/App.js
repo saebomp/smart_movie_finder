@@ -109,9 +109,3 @@ export default function App() {
     </div>
   );
 }
-
-// API
-// https://developers.themoviedb.org/3/movies/get-popular-movies
-
-//할거
-//5. 어떤 펑션이 뭔지 주석 달것
