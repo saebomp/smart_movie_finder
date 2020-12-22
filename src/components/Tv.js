@@ -31,10 +31,11 @@ class Tv extends React.Component {
     this.state = {
       type:'airing_today',
       tvs: [],
-      limit1: 0,
-      limit2: 10
+      page:1,
+      total_pages:''
     }
   this.getType = this.getType.bind(this);
+  this.handlePageClick = this.handlePageClick.bind(this);
 }
 
 async getType(e) {
@@ -42,24 +43,22 @@ async getType(e) {
   this.fetchTvs(this.setState({limit1:0, limit2:10}));
 }
 
-handleNextPage = (e) => {
-  e.preventDefault();
-  this.fetchTvs(this.setState({limit1:10, limit2:20}));
+async handlePageClick(e) {
+  await this.setState({page:e.selected+1})
+  this.fetchTvs();
 }
 
-handlePrevPage = (e) => {
-  e.preventDefault();
-  this.fetchTvs(this.setState({limit1:0, limit2:10}));
-}
 
-fetchTvs = () => {
-  const {type} = this.state
+fetchTvs = e => {
+  const {type,page} = this.state
 
-  getTvs(type).then (
+  getTvs(type,page).then (
     tvs => {
       this.setState({
         type:type,
-        tvs,
+        tvs:[...tvs.results],
+        total_pages:tvs.total_pages,
+        page:page
       })
     },
     error => {
@@ -75,7 +74,7 @@ fetchTvs = () => {
 
   render() {
     const { classes } = this.props;
-    const {tvs,limit1,limit2} = this.state;
+    const {tvs} = this.state;
 
     return (
     <div className="wrapper">
@@ -95,7 +94,7 @@ fetchTvs = () => {
         </div>
         </div>
         <div className="movieWrapper">
-        {tvs.slice(limit1, limit2).map( (tv, index) => (
+        {tvs.map( (tv, index) => (
           <TvList
             key={index}
             original_name={tv.original_name} 
@@ -106,10 +105,9 @@ fetchTvs = () => {
           />
         ))}
         <Pagination 
-          limit1={limit1}
-          limit2={limit2}
-          handleNextPage={this.handleNextPage}
-          handlePrevPage={this.handlePrevPage}
+          total_pages={this.state.total_pages}
+          page={this.state.page}
+          handlePageClick={this.handlePageClick}
         />
       </div>
     </div>

@@ -56,9 +56,10 @@ class Search extends React.Component {
     query:'',
     type:'movie',
     msg:'Please enter a search',
-    limit1: 0,
-    limit2 : 10
+    page:1,
+    total_pages:''
   }
+  this.handlePageClick = this.handlePageClick.bind(this);
 }
 
   updateSearch = e => {
@@ -76,26 +77,23 @@ class Search extends React.Component {
     this.fetchMulti(this.setState({limit1:0, limit2:10}));
   }
 
-  handleNextPage = (e) => {
-    e.preventDefault();
-    this.fetchMulti(this.setState({limit1:10, limit2:20}));
-  }
-
-  handlePrevPage = (e) => {
-    e.preventDefault();
-    this.fetchMulti(this.setState({limit1:0, limit2:10}));
+  async handlePageClick(e) {
+    await this.setState({page:e.selected+1})
+    this.fetchMulti();
   }
 
   fetchMulti = e => {
-    const {type, query} = this.state
+    const {type, query, page} = this.state
 
-    searchQuery(type, query).then(
+    searchQuery(type, query, page).then(
       result => {
         this.setState({
           isLoading:false,
-          result,
+          result:[...result.results],
           query:query,
-          type:type
+          type:type,
+          total_pages:result.total_pages,
+          page:page
         })
       },
       error => {
@@ -107,7 +105,7 @@ class Search extends React.Component {
 
 render() {
   const { classes } = this.props;
-  const {isLoading, result, limit1, limit2} = this.state;
+  const {isLoading, result} = this.state;
 
   return (
     <div className="wrapper">
@@ -152,11 +150,9 @@ render() {
       </div>
       {isLoading ? <div className="isLoading">{this.state.msg}</div> :
       <div className="movieWrapper">
-        {/* when there were no results */}
         {result.length === 0 ? (<div className="isLoading">Sorry, there were no results</div>)
         :
-        // it shows the first 10 results
-        result.slice(limit1, limit2).map( (movie, index) => (
+        result.map( (movie, index) => (
           <SearchList
             key={index}
             title={movie.title} 
@@ -168,16 +164,15 @@ render() {
             poster_path={movie.poster_path}
           />
         ))}
-        {/* when it has less than 10 result, pagination will not show */}
-        {result.length >= 10 ?
+        {result.length >= 1 ?
         <Pagination 
-          limit2={limit2}
-          handleNextPage={this.handleNextPage}
-          handlePrevPage={this.handlePrevPage}
+          total_pages={this.state.total_pages}
+          page={this.state.page}
+          handlePageClick={this.handlePageClick}
         />
         :
         <div></div>
-        }
+        } 
       </div>
     }
     </div>

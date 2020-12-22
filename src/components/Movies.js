@@ -31,10 +31,11 @@ class Movies extends React.Component {
   this.state = {
     type : 'now_playing',
     movies: [],
-    limit1: 0,
-    limit2 : 10
+    page:1,
+    total_pages:''
   }
   this.getType = this.getType.bind(this);
+  this.handlePageClick = this.handlePageClick.bind(this);
 }
 
   async getType(e) {
@@ -42,24 +43,22 @@ class Movies extends React.Component {
     this.fetchMovies(this.setState({limit1:0, limit2:10}));
   }
 
-  handleNextPage = (e) => {
-    e.preventDefault();
-    this.fetchMovies(this.setState({limit1:10, limit2:20}));
+  async handlePageClick(e) {
+    await this.setState({page:e.selected+1})
+    this.fetchMovies();
   }
 
-  handlePrevPage = (e) => {
-    e.preventDefault();
-    this.fetchMovies(this.setState({limit1:0, limit2:10}));
-  }
 
   fetchMovies = () => {
-    const {type} = this.state
+    const {type,page} = this.state
 
-    getMovies(type).then(
+    getMovies(type,page).then(
       movies => {
         this.setState({
           type:type,
-          movies
+          movies:[...movies.results],
+          total_pages:movies.total_pages,
+          page:page
         })
       },
       error => {
@@ -74,7 +73,7 @@ class Movies extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { movies, limit1, limit2} = this.state;
+    const { movies} = this.state;
 
     return (
     <div className="wrapper">
@@ -95,7 +94,7 @@ class Movies extends React.Component {
         </div>
         </div>
         <div className="movieWrapper">
-          {movies.slice(limit1, limit2).map( (movie, index) => (
+          {movies.map( (movie, index) => (
             <MovieList
               key={index}
               title={movie.title} 
@@ -106,9 +105,9 @@ class Movies extends React.Component {
             />
           ))}
           <Pagination 
-            limit2={limit2}
-            handleNextPage={this.handleNextPage}
-            handlePrevPage={this.handlePrevPage}
+            total_pages={this.state.total_pages}
+            page={this.state.page}
+            handlePageClick={this.handlePageClick}
           />
         </div>
       </div>

@@ -1,32 +1,24 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import ReactPaginate from 'react-paginate';
 
-const Pagination = ({limit2, handleNextPage,handlePrevPage}) => {
+const Pagination = ({total_pages, page, handlePageClick }) => {
   return (
-    <div className="next">
-      {limit2 <= 10 ?
-      <Button 
-        variant="contained" 
-        color="primary"
-        onClick={handleNextPage}
-        type="submit"
-        value="submit"
-        >
-        Next page
-      </Button>
-      :
-      <Button 
-        variant="contained" 
-        color="primary"
-        onClick={handlePrevPage}
-        type="submit"
-        value="submit"
-        >
-        Previous page
-      </Button>
-      } 
-    </div>
+    <ReactPaginate
+      previousLabel={"prev"}
+      nextLabel={"next"}
+      breakLabel={"..."}
+      breakClassName={"break-me"}
+      pageCount={total_pages}
+      marginPagesDisplayed={1}
+      pageRangeDisplayed={2}
+      containerClassName={"pagination"}
+      activeClassName={"active"}
+      forcePage={page-1}
+      onPageChange={handlePageClick}
+      // onKeyPress={this.pageSelectedHandler}
+    />
   )
+  
 }
 
 export default Pagination;
