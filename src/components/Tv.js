@@ -40,7 +40,7 @@ class Tv extends React.Component {
 
 async getType(e) {
   await this.setState({type:e.target.value})
-  this.fetchTvs(this.setState({limit1:0, limit2:10}));
+  this.fetchTvs();
 }
 
 async handlePageClick(e) {

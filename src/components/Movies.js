@@ -40,7 +40,7 @@ class Movies extends React.Component {
 
   async getType(e) {
     await this.setState({type:e.target.value})
-    this.fetchMovies(this.setState({limit1:0, limit2:10}));
+    this.fetchMovies();
   }
 
   async handlePageClick(e) {

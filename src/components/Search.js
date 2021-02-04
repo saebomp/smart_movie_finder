@@ -74,7 +74,7 @@ class Search extends React.Component {
   getSearch = e => {
     e.preventDefault();
     this.setState({query:e.target.value, type:e.target.value})
-    this.fetchMulti(this.setState({limit1:0, limit2:10}));
+    this.fetchMulti();
   }
 
   async handlePageClick(e) {
