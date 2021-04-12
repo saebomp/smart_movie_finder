@@ -48,7 +48,6 @@ class Movies extends React.Component {
     this.fetchMovies();
   }
 
-
   fetchMovies = () => {
     const {type,page} = this.state
 
@@ -70,7 +69,8 @@ class Movies extends React.Component {
   componentDidMount() {
     this.fetchMovies();
   }
-
+  // componentDidMount() 메서드는 컴포넌트 출력물이 DOM에 렌더링 된 후에 실행됩니다. 
+  
   render() {
     const { classes } = this.props;
     const { movies} = this.state;
