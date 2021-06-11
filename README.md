@@ -8,7 +8,7 @@ React / CSS / Responsive Web /  Material-UI
 
 ## Setup
 npm start<br />
-https://saebomp.github.io/movie_app
+https://saebomp.github.io/smart_movie_finder/
 
 ## Status
 Project is finished
