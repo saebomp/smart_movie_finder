@@ -32,19 +32,20 @@ class Movies extends React.Component {
     type : 'now_playing',
     movies: [],
     page:1,
-    total_pages:''
+    total_pages:'',
+    id:''
   }
   this.getType = this.getType.bind(this);
   this.handlePageClick = this.handlePageClick.bind(this);
 }
 
-  async getType(e) {
-    await this.setState({type:e.target.value})
+  async handlePageClick(e) {
+    await this.setState({page:e.selected+1})
     this.fetchMovies();
   }
 
-  async handlePageClick(e) {
-    await this.setState({page:e.selected+1})
+  async getType(e) {
+    await this.setState({type:e.target.value})
     this.fetchMovies();
   }
 
@@ -57,7 +58,7 @@ class Movies extends React.Component {
           type:type,
           movies:[...movies.results],
           total_pages:movies.total_pages,
-          page:page
+          page:page,
         })
       },
       error => {
@@ -102,6 +103,8 @@ class Movies extends React.Component {
               popularity={movie.popularity} 
               overview={movie.overview} 
               poster_path={movie.poster_path}
+              id={movie.id}
+              genre_ids={movie.genre_ids}
             />
           ))}
           <Pagination 
