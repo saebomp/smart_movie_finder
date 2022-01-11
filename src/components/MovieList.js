@@ -87,7 +87,7 @@ const getPosts = async () => {
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
             <span>Release date : {release_date}</span>
-            <span> / Popularity : {popularity}</span>
+            <span> / Popularity : {popularity.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
           </Typography>
           <Typography>
               {posts.genres?.map((el) => (

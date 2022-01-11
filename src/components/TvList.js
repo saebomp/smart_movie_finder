@@ -84,7 +84,7 @@ const TvList = ({original_name, poster_path, popularity, first_air_date, overvie
         </Typography>
         <Typography variant="subtitle2" color="textSecondary">
           <span>First_air_date : {first_air_date}</span>
-          <span> / Popularity : {popularity}</span>
+          <span> / Popularity : {popularity.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</span>
         </Typography>
         <Typography>
               {posts.genres?.map((el) => (
