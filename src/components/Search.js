@@ -160,8 +160,11 @@ render() {
             release_date={movie.release_date} 
             first_air_date={movie.first_air_date}
             popularity={movie.popularity}
-            overview={movie.overview} 
+            overview={movie.overview}
+            type={this.state.type} 
+            id={movie.id}
             poster_path={movie.poster_path}
+            genre_ids={movie.genre_ids}
           />
         ))}
         {result.length >= 1 ?

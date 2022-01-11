@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -6,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import noimage from '../images/noimage.png'
 
+import {APP_KEY, BASE_URL} from '../config/api_config';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -35,10 +37,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SearchList = ({title, original_name, poster_path, popularity, release_date, first_air_date, overview}) => {
-
+const SearchList = ({title, original_name, poster_path, popularity, release_date, type, first_air_date, overview, id, genre_ids}) => {
+  
   const classes = useStyles();
+  const [posts, setPosts] = useState([]);
 
+  useEffect(()=> {
+    getPosts()
+  }, [])
+
+  const getPosts = async () => {
+    const url = `https://api.themoviedb.org/3/${type}/${id}?api_key=${APP_KEY}`
+    try {
+      const response = await axios.get(url, {
+        params: {
+          language:'en-US',
+        }
+      })
+      const posts = response.data
+      setPosts(posts)
+    }
+    catch(error) {
+      throw error
+    }
+  }
+  
   return (
     <Card className={classes.root}>
       {poster_path ?
@@ -73,6 +96,11 @@ const SearchList = ({title, original_name, poster_path, popularity, release_date
             <span>First_air_date : {first_air_date}</span>
           }
             <span> / Popularity : {popularity}</span>
+          </Typography>
+          <Typography>
+            {posts.genres?.map((el) => (
+              <span className="genres">{el.name}</span>
+            ))}
           </Typography>
           <Typography variant="body2" component="p" style={{marginTop:'20px'}}>
             {overview}

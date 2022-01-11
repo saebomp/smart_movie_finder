@@ -102,6 +102,7 @@ fetchTvs = e => {
             popularity={tv.popularity} 
             overview={tv.overview} 
             poster_path={tv.poster_path}
+            id={tv.id}
           />
         ))}
         <Pagination 

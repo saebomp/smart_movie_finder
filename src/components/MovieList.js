@@ -38,13 +38,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieList = ({title, poster_path, release_date, popularity, overview, id, genre_ids}) => {  
+const MovieList = ({title, poster_path, release_date, popularity, overview, id}) => {  
   const classes = useStyles();
   const theme = useTheme();
 
   const [posts, setPosts] = useState([]);
-
-
 
   useEffect(()=> {
     getPosts()
@@ -60,7 +58,6 @@ const getPosts = async () => {
       })
       const posts = response.data
       setPosts(posts)
-      console.log('thisis new', posts)
     }
     catch(error) {
       throw error

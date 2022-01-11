@@ -11,7 +11,6 @@ export const getMovies = async ( type, page ) => {
         language:'en-US',
       }
     })
-    console.log('response', response)
 
     const movies = response.data;
     return movies
@@ -34,7 +33,7 @@ export const searchQuery = async ( type, query, page ) => {
     console.log('response2', response2)
 
     const result = response2.data
-    return result
+    return result;
   }
   catch(error) {
     throw error

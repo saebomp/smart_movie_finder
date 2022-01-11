@@ -104,7 +104,6 @@ class Movies extends React.Component {
               overview={movie.overview} 
               poster_path={movie.poster_path}
               id={movie.id}
-              genre_ids={movie.genre_ids}
             />
           ))}
           <Pagination 
