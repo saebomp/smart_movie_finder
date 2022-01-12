@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import MovieList from './MovieList'
 import Pagination from './Pagination'
+import ScrollToTop from './ScrollToTop'
 import {getMovies} from '../services/api'
 
 const styles = (theme) => ({
@@ -33,7 +34,8 @@ class Movies extends React.Component {
     movies: [],
     page:1,
     total_pages:'',
-    id:''
+    id:'',
+    is_visible: false
   }
   this.getType = this.getType.bind(this);
   this.handlePageClick = this.handlePageClick.bind(this);
@@ -67,8 +69,22 @@ class Movies extends React.Component {
     )
   }
 
+  toggleVisibility = () => {
+    if (window.pageYOffset > 300) {
+      this.setState({
+        is_visible: true
+      });
+    } else {
+      this.setState({
+        is_visible: false
+      });
+    }
+  }
+
   componentDidMount() {
     this.fetchMovies();
+    document.addEventListener("scroll", this.toggleVisibility)
+    
   }
   // componentDidMount() 메서드는 컴포넌트 출력물이 DOM에 렌더링 된 후에 실행됩니다. 
   
@@ -110,6 +126,9 @@ class Movies extends React.Component {
             total_pages={this.state.total_pages}
             page={this.state.page}
             handlePageClick={this.handlePageClick}
+          />
+          <ScrollToTop
+            is_visible={this.state.is_visible}
           />
         </div>
       </div>

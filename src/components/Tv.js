@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import TvList from './TvList'
 import Pagination from './Pagination';
+import ScrollToTop from './ScrollToTop';
 import {getTvs} from '../services/api'
 
 const styles = (theme) => ({
@@ -32,44 +33,55 @@ class Tv extends React.Component {
       type:'airing_today',
       tvs: [],
       page:1,
-      total_pages:''
+      total_pages:'',
+      is_visible:false
     }
   this.getType = this.getType.bind(this);
   this.handlePageClick = this.handlePageClick.bind(this);
-}
+  }
 
-async getType(e) {
-  await this.setState({type:e.target.value})
-  this.fetchTvs();
-}
+  async getType(e) {
+    await this.setState({type:e.target.value})
+    this.fetchTvs();
+  }
 
-async handlePageClick(e) {
-  await this.setState({page:e.selected+1})
-  this.fetchTvs();
-}
+  async handlePageClick(e) {
+    await this.setState({page:e.selected+1})
+    this.fetchTvs();
+  }
 
+  fetchTvs = e => {
+    const {type,page} = this.state
 
-fetchTvs = e => {
-  const {type,page} = this.state
-
-  getTvs(type,page).then (
-    tvs => {
+    getTvs(type,page).then (
+      tvs => {
+        this.setState({
+          type:type,
+          tvs:[...tvs.results],
+          total_pages:tvs.total_pages,
+          page:page
+        })
+      },
+      error => {
+        alert('Error', `Something went wrong ${error}`)
+        console.log('error', error)
+      }
+    )
+  }
+  toggleVisibility = () => {
+    if (window.pageYOffset > 300) {
       this.setState({
-        type:type,
-        tvs:[...tvs.results],
-        total_pages:tvs.total_pages,
-        page:page
-      })
-    },
-    error => {
-      alert('Error', `Something went wrong ${error}`)
-      console.log('error', error)
+        is_visible: true
+      });
+    } else {
+      this.setState({
+        is_visible: false
+      });
     }
-  )
-}
-
+  }
   componentDidMount() {
     this.fetchTvs();
+    document.addEventListener("scroll", this.toggleVisibility)
   }
 
   render() {
@@ -109,6 +121,9 @@ fetchTvs = e => {
           total_pages={this.state.total_pages}
           page={this.state.page}
           handlePageClick={this.handlePageClick}
+        />
+        <ScrollToTop
+            is_visible={this.state.is_visible}
         />
       </div>
     </div>

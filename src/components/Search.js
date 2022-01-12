@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 import SearchList from './SearchList'
 import Pagination from './Pagination';
+import ScrollToTop from './ScrollToTop';
 import {searchQuery} from '../services/api'
 
 const styles = (theme) => ({
@@ -57,7 +58,8 @@ class Search extends React.Component {
     type:'movie',
     msg:'Please enter a search',
     page:1,
-    total_pages:''
+    total_pages:'',
+    is_visible:false
   }
   this.handlePageClick = this.handlePageClick.bind(this);
 }
@@ -102,84 +104,101 @@ class Search extends React.Component {
       } 
     )
   }
-
-render() {
-  const { classes } = this.props;
-  const {isLoading, result} = this.state;
-
-  return (
-    <div className="wrapper">
-      <div className="heading">
-        <div>Search</div>
-        <div>
-          <form 
-            className="inputWrapper" 
-            onSubmit={this.getSearch}
-            >
-            <TextField 
-              classes={{root: classes.root}}
-              id="filled-size-small"
-              size="small"
-              placeholder="Search field" 
-              type="text" 
-              variant="outlined" 
-              value={this.state.query} 
-              onChange={this.updateSearch}
-            />
-            <Select
-              className={classes.selectControl}
-              onChange={this.updateType}
-              defaultValue="movie"
-            >
-              <MenuItem value="movie">Movie</MenuItem>
-              <MenuItem value="multi">Multi</MenuItem>
-              <MenuItem value="tv">TV</MenuItem>
-            </Select>
-            <Button 
-              className={classes.button}
-              variant="contained"
-              type="submit"
-              value="submit"
-            >
-              <SearchIcon 
-              fontSize="small" 
-              />
-            </Button>
-          </form>
-        </div>
-      </div>
-      {isLoading ? <div className="isLoading">{this.state.msg}</div> :
-      <div className="movieWrapper">
-        {result.length === 0 ? (<div className="isLoading">Sorry, there were no results</div>)
-        :
-        result.map( (movie, index) => (
-          <SearchList
-            key={index}
-            title={movie.title} 
-            original_name={movie.original_name}
-            release_date={movie.release_date} 
-            first_air_date={movie.first_air_date}
-            popularity={movie.popularity}
-            overview={movie.overview}
-            type={this.state.type} 
-            id={movie.id}
-            poster_path={movie.poster_path}
-            genre_ids={movie.genre_ids}
-          />
-        ))}
-        {result.length >= 1 ?
-        <Pagination 
-          total_pages={this.state.total_pages}
-          page={this.state.page}
-          handlePageClick={this.handlePageClick}
-        />
-        :
-        <div></div>
-        } 
-      </div>
+  toggleVisibility = () => {
+    if (window.pageYOffset > 300) {
+      this.setState({
+        is_visible: true
+      });
+    } else {
+      this.setState({
+        is_visible: false
+      });
     }
-    </div>
-  );
+  }
+  componentDidMount() {
+    document.addEventListener("scroll", this.toggleVisibility)
+  }
+
+  render() {
+    const { classes } = this.props;
+    const {isLoading, result} = this.state;
+
+    return (
+      <div className="wrapper">
+        <div className="heading">
+          <div>Search</div>
+          <div>
+            <form 
+              className="inputWrapper" 
+              onSubmit={this.getSearch}
+              >
+              <TextField 
+                classes={{root: classes.root}}
+                id="filled-size-small"
+                size="small"
+                placeholder="Search field" 
+                type="text" 
+                variant="outlined" 
+                value={this.state.query} 
+                onChange={this.updateSearch}
+              />
+              <Select
+                className={classes.selectControl}
+                onChange={this.updateType}
+                defaultValue="movie"
+              >
+                <MenuItem value="movie">Movie</MenuItem>
+                <MenuItem value="multi">Multi</MenuItem>
+                <MenuItem value="tv">TV</MenuItem>
+              </Select>
+              <Button 
+                className={classes.button}
+                variant="contained"
+                type="submit"
+                value="submit"
+              >
+                <SearchIcon 
+                fontSize="small" 
+                />
+              </Button>
+            </form>
+          </div>
+        </div>
+        {isLoading ? <div className="isLoading">{this.state.msg}</div> :
+        <div className="movieWrapper">
+          {result.length === 0 ? (<div className="isLoading">Sorry, there were no results</div>)
+          :
+          result.map( (movie, index) => (
+            <SearchList
+              key={index}
+              title={movie.title} 
+              original_name={movie.original_name}
+              release_date={movie.release_date} 
+              first_air_date={movie.first_air_date}
+              popularity={movie.popularity}
+              overview={movie.overview}
+              type={this.state.type} 
+              id={movie.id}
+              poster_path={movie.poster_path}
+              genre_ids={movie.genre_ids}
+            />
+          ))}
+          {result.length >= 1 ?
+          <Pagination 
+            total_pages={this.state.total_pages}
+            page={this.state.page}
+            handlePageClick={this.handlePageClick}
+          />
+          :
+          <div></div>
+          } 
+          <ScrollToTop
+            is_visible={this.state.is_visible}
+          />
+        </div>
+      }
+      </div>
+    );
   }
 }
 

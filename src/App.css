@@ -120,6 +120,13 @@
   background-color: #fff
 }
 
+.scroll-to-top {
+  position:fixed;
+  bottom:80px; 
+  right:30px;
+  cursor: pointer;
+}
+
 /*Responsive*/
 @media (min-width: 768px) and (max-width: 1024px) {
   .movieWrapper {
