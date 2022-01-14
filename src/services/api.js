@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import {APP_KEY, BASE_URL} from '../config/api_config';
-
+const APP_KEY = process.env.REACT_APP_KEY;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const getMovies = async ( type, page ) => { 
   const url = `${BASE_URL}/movie/${type}?api_key=${APP_KEY}&page=${page}`

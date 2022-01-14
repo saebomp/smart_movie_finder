@@ -7,7 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import noimage from '../images/noimage.png'
 
-import {APP_KEY, BASE_URL} from '../config/api_config';
+const APP_KEY = process.env.REACT_APP_KEY;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',

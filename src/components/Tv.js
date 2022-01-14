@@ -68,6 +68,7 @@ class Tv extends React.Component {
       }
     )
   }
+
   toggleVisibility = () => {
     if (window.pageYOffset > 300) {
       this.setState({
@@ -123,7 +124,7 @@ class Tv extends React.Component {
           handlePageClick={this.handlePageClick}
         />
         <ScrollToTop
-            is_visible={this.state.is_visible}
+          is_visible={this.state.is_visible}
         />
       </div>
     </div>
