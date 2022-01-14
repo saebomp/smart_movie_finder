@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TvList from './TvList'
 import Pagination from './Pagination';
 import ScrollToTop from './ScrollToTop';
-import {getTvs} from '../services/api'
+import {getResult} from '../services/api'
 
 const styles = (theme) => ({
   selectControl: {
@@ -34,7 +34,8 @@ class Tv extends React.Component {
       tvs: [],
       page:1,
       total_pages:'',
-      is_visible:false
+      is_visible:false,
+      is_type:'tv'
     }
   this.getType = this.getType.bind(this);
   this.handlePageClick = this.handlePageClick.bind(this);
@@ -51,15 +52,16 @@ class Tv extends React.Component {
   }
 
   fetchTvs = e => {
-    const {type,page} = this.state
+    const {type,page,is_type} = this.state
 
-    getTvs(type,page).then (
+    getResult(type,page, is_type).then (
       tvs => {
         this.setState({
           type:type,
           tvs:[...tvs.results],
           total_pages:tvs.total_pages,
-          page:page
+          page:page,
+          is_type:is_type
         })
       },
       error => {

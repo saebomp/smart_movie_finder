@@ -75,7 +75,6 @@ export default function App() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log('newValue',newValue);
   };
 
   return (

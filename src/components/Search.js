@@ -86,7 +86,6 @@ class Search extends React.Component {
 
   fetchMulti = e => {
     const {type, query, page} = this.state
-
     searchQuery(type, query, page).then(
       result => {
         this.setState({

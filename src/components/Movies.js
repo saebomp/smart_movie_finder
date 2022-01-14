@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MovieList from './MovieList'
 import Pagination from './Pagination'
 import ScrollToTop from './ScrollToTop'
-import {getMovies} from '../services/api'
+import {getResult} from '../services/api'
 
 const styles = (theme) => ({
   selectControl: {
@@ -35,7 +35,8 @@ class Movies extends React.Component {
     page:1,
     total_pages:'',
     id:'',
-    is_visible: false
+    is_visible: false,
+    is_type:'movie'
   }
   this.getType = this.getType.bind(this);
   this.handlePageClick = this.handlePageClick.bind(this);
@@ -52,15 +53,16 @@ class Movies extends React.Component {
   }
 
   fetchMovies = () => {
-    const {type,page} = this.state
+    const {type,page,is_type} = this.state
 
-    getMovies(type,page).then(
+    getResult(type,page,is_type).then(
       movies => {
         this.setState({
           type:type,
           movies:[...movies.results],
           total_pages:movies.total_pages,
           page:page,
+          is_type:is_type
         })
       },
       error => {
