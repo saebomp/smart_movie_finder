@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MovieList from './MovieList'
 import Pagination from './Pagination'
 import ScrollToTop from './ScrollToTop'
+import AddFavourites from './AddFavourites';
 import {getResult} from '../services/api'
 
 const styles = (theme) => ({
@@ -36,7 +37,8 @@ class Movies extends React.Component {
     total_pages:'',
     id:'',
     is_visible: false,
-    is_type:'movie'
+    is_type:'movie',
+    favoriteList:{}
   }
   this.getType = this.getType.bind(this);
   this.handlePageClick = this.handlePageClick.bind(this);
@@ -83,6 +85,12 @@ class Movies extends React.Component {
     }
   }
 
+  addFavouriteMovie = (movie) => {
+		const newFavouriteList = {...movie};
+		this.setState({favoriteList:newFavouriteList})
+    console.log('ddd', this.state.favoriteList)
+	};
+
   componentDidMount() {
     this.fetchMovies();
     document.addEventListener("scroll", this.toggleVisibility)
@@ -122,6 +130,9 @@ class Movies extends React.Component {
               overview={movie.overview} 
               poster_path={movie.poster_path}
               id={movie.id}
+              movie={movie}
+              favouriteComponent={AddFavourites}
+              handleFavouritesClick={this.addFavouriteMovie}
             />
           ))}
           <Pagination 
@@ -140,9 +151,3 @@ class Movies extends React.Component {
 
     
 export default withStyles(styles)(Movies);
-
-//Reference
-// https://medium.com/@ian.mundy/async-event-handlers-in-react-a1590ed24399
-// https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94
-// https://stackoverflow.com/questions/54419220/react-native-display-x-number-of-rows-from-an-array
-// https://stackoverflow.com/questions/63193903/react-limit-api-results-and-view-more-items

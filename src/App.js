@@ -108,3 +108,15 @@ export default function App() {
     </div>
   );
 }
+
+
+
+//Reference
+// https://medium.com/@ian.mundy/async-event-handlers-in-react-a1590ed24399
+// https://joshua1988.github.io/web-development/javascript/js-async-await/#async--await%EB%8A%94-%EB%AD%94%EA%B0%80%EC%9A%94
+// https://stackoverflow.com/questions/54419220/react-native-display-x-number-of-rows-from-an-array
+// https://stackoverflow.com/questions/63193903/react-limit-api-results-and-view-more-items
+
+
+// https://developers.themoviedb.org/3/getting-started/introduction
+// https://www.freecodecamp.org/news/react-movie-app-tutorial/
