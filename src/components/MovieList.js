@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     marginBottom:'20px',
+    position:'relative',
     [theme.breakpoints.down('xs')]: {
       flexDirection: 'column',
     },
@@ -97,10 +98,11 @@ const getPosts = async () => {
             {overview}
           </Typography>
         </CardContent>
-        <div onClick={() => handleFavouritesClick(movie)}>
-          <FavouriteComponent movie={movie} />
-        </div>
       </div>
+      <FavouriteComponent 
+        movie={movie} 
+        onClick={() => handleFavouritesClick(movie)}
+      />
     </Card>
     )
   }
