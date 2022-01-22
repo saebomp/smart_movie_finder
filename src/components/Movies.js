@@ -87,7 +87,7 @@ class Movies extends React.Component {
 
   addFavouriteMovie = (movie) => {
 		const newFavouriteList = {...movie};
-		this.setState({favoriteList:newFavouriteList})
+		this.setState({favoriteList:{...newFavouriteList}})
     console.log('ddd', this.state.favoriteList)
 	};
 

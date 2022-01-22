@@ -1,12 +1,11 @@
 import React from 'react';
-import MovieList from './MovieList';
 
 const AddFavourites = () => {
 	return (
 		<div className="favorite">
 			<svg
-				width='1em'
-				height='1em'
+				width='1.2em'
+				height='1.2em'
 				viewBox='0 0 16 16'
 				class='bi bi-heart-fill'
 				fill='white'

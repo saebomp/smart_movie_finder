@@ -132,10 +132,13 @@
   top:15px;
   left:15px;
   cursor: pointer;
-  background-color: #dedede;
-  padding:7px 6px 3px;
+  background-color:#999;
+  padding:9px 8px 4px;
   border-radius: 50%;
   line-height: 1;
+}
+.favorite:hover {
+  background-color:rgb(233, 30, 131)
 }
 
 /*Responsive*/

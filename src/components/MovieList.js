@@ -44,6 +44,7 @@ const MovieList = ({title, poster_path, release_date, popularity, overview, id, 
   const classes = useStyles();
   const theme = useTheme();
   const [posts, setPosts] = useState([]);
+
   useEffect(()=> {
     getPosts()
   }, [])
@@ -63,7 +64,6 @@ const getPosts = async () => {
       throw error
     }
   }
-
 
   return (
     <Card className={classes.root}>
@@ -99,10 +99,10 @@ const getPosts = async () => {
           </Typography>
         </CardContent>
       </div>
-      <FavouriteComponent 
-        movie={movie} 
-        onClick={() => handleFavouritesClick(movie)}
-      />
+      <div onClick={() => handleFavouritesClick(movie)}>
+        <FavouriteComponent />
+      </div>
+      
     </Card>
     )
   }
