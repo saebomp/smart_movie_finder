@@ -38,7 +38,8 @@ class Movies extends React.Component {
     id:'',
     is_visible: false,
     is_type:'movie',
-    favoriteList:{}
+    favoriteList:{},
+    favoriteBtn:false
   }
   this.getType = this.getType.bind(this);
   this.handlePageClick = this.handlePageClick.bind(this);
@@ -87,8 +88,7 @@ class Movies extends React.Component {
 
   addFavouriteMovie = (movie) => {
 		const newFavouriteList = {...movie};
-		this.setState({favoriteList:{...newFavouriteList}})
-    console.log('ddd', this.state.favoriteList)
+		this.setState({favoriteList:{newFavouriteList}, favoriteBtn:!this.state.favoriteBtn})
 	};
 
   componentDidMount() {
@@ -131,8 +131,9 @@ class Movies extends React.Component {
               poster_path={movie.poster_path}
               id={movie.id}
               movie={movie}
-              favouriteComponent={AddFavourites}
+              // favouriteComponent={AddFavourites}
               handleFavouritesClick={this.addFavouriteMovie}
+              favoriteBtn={this.state.favoriteBtn}
             />
           ))}
           <Pagination 

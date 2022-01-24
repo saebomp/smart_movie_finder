@@ -1,8 +1,8 @@
 import React from 'react';
 
-const AddFavourites = () => {
+const AddFavourites = ({favoriteBtn}) => {
 	return (
-		<div className="favorite">
+		<div className="favorite" style={{backgroundColor: {favoriteBtn} ? '#999' : 'hotpink'}}>
 			<svg
 				width='1.2em'
 				height='1.2em'

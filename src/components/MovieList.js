@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MovieList = ({title, poster_path, release_date, popularity, overview, id, favouriteComponent, movie, handleFavouritesClick}) => {  
+const MovieList = ({title, poster_path, release_date, popularity, overview, id, favouriteComponent, movie, handleFavouritesClick, favoriteBtn}) => {  
   const FavouriteComponent = favouriteComponent;
   const classes = useStyles();
   const theme = useTheme();
@@ -99,9 +99,9 @@ const getPosts = async () => {
           </Typography>
         </CardContent>
       </div>
-      <div onClick={() => handleFavouritesClick(movie)}>
-        <FavouriteComponent />
-      </div>
+      {/* <div onClick={() => handleFavouritesClick(movie)}>
+        <FavouriteComponent favoriteBtn={favoriteBtn} />
+      </div> */}
       
     </Card>
     )
